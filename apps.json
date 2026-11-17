@@ -1,306 +1,586 @@
 {
- "apps": [
-  {
-   "appId": "284",
-   "name": "TV Channels▶",
-   "icon": "https://img.vidaahub.com/vidaa/2025/12/202512030945137285.jpg",
-   "native": true
-  },
-  {
-   "appId": "1",
-   "name": "Netflix",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090857551807.png",
-   "native": true
-  },
-  {
-   "appId": "3",
-   "name": "YouTube",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090858299321.png",
-   "helperFirst": true,
-   "url": "https://www.youtube.com/tv"
-  },
-  {
-   "appId": "295",
-   "name": "Disney+",
-   "icon": "https://img.vidaahub.com/vidaa/2024/11/202411260732081526.png",
-   "url": "https://cd-dmgz.bamgrid.com/bbd/hisense_tv/index.html"
-  },
-  {
-   "appId": "2",
-   "name": "Prime Video",
-   "icon": "https://img.vidaahub.com/vidaa/2024/11/202411210932408667.png",
-   "native": true
-  },
-  {
-   "appId": "2425",
-   "name": "TV Vlaanderen",
-   "icon": "https://img.vidaahub.com/vidaa/2024/12/202412180908213905.jpg",
-   "url": "https://tvvstatic.solocoo.tv/html5"
-  },
-  {
-   "appId": "2212",
-   "name": "VTM GO",
-   "icon": "https://img.vidaahub.com/vidaa/2024/9/202409230952565463.png",
-   "url": "https://hisense.vtmgo.be/release/"
-  },
-  {
-   "appId": "2568",
-   "name": "Stremio Lite",
-   "icon": "https://img.vidaahub.com/s3_bucket/9999/app/9999_80d92da5-01bf-4416-b46b-901c63b257d1/a14b838fd3d7a02375371564a0545f89?f=webp&resize=w_300,h_300",
-   "url": "https://relvhgchz5.strem.io/hello-world/index.html"
-  },
-  {
-   "appId": "2378",
-   "name": "HBO Max",
-   "icon": "https://img.vidaahub.com/vidaa/2025/7/202507091016437937.png",
-   "url": "https://vidaa.play-hbo.max.com"
-  },
-  {
-   "appId": "2583",
-   "name": "VRT Max",
-   "icon": "https://img.vidaahub.com/vidaa/2025/12/202512290305352655.png",
-   "url": "https://vidaa-tv.vrt.be"
-  },
-  {
-   "appId": "351",
-   "name": "Apple TV",
-   "icon": "https://img.vidaahub.com/vidaa/2025/11/202511050649298835.png",
-   "url": "https://atve.tv.apple.com/94819831-5404-4438-810e-afb648d6a826/tvw_1dc2aab0a313427dbc11818be8a18bd9/"
-  },
-  {
-   "appId": "2584",
-   "name": "XBOX",
-   "icon": "https://img.vidaahub.com/vidaa/2026/6/202606290146355685.jpg",
-   "url": "https://play.xbox.com/_external/init"
-  },
-  {
-   "appId": "1947",
-   "name": "TF1+",
-   "icon": "https://img.vidaahub.com/vidaa/2024/1/202401080924346571.png",
-   "url": "https://smart-tv-vidaa.prod.p.tf1.fr/?source=atf"
-  },
-  {
-   "appId": "65",
-   "name": "Rakuten TV",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090900492844.png",
-   "url": "https://prod-hisense-ui40-app.rakuten.tv/"
-  },
-  {
-   "appId": "244",
-   "name": "UEFA.tv",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090919094943.png",
-   "url": "https://dice-tv.imggaming.com/vidaa/dce.uefatv/index.html#/"
-  },
-  {
-   "appId": "2256",
-   "name": "Spotify",
-   "icon": "https://img.vidaahub.com/vidaa/2026/5/202605290216573337.jpg",
-   "url": "https://api-partner.spotify.com/tvapp?platform=vidaa"
-  },
-  {
-   "appId": "2372",
-   "name": "Crunchyroll",
-   "icon": "https://img.vidaahub.com/vidaa/2024/9/202409041444508945.png",
-   "url": "https://www.crunchyroll.com/tetsuo/hisense-vidaa/"
-  },
-  {
-   "appId": "245",
-   "name": "Triller TV.",
-   "icon": "https://img.vidaahub.com/vidaa/2024/1/202401240916139001.png",
-   "url": "https://ott-apps.fite.tv/hisense/index.html"
-  },
-  {
-   "appId": "227",
-   "name": "Haystack TV Local + World News",
-   "icon": "https://img.vidaahub.com/vidaa/2024/12/202412101945116636.jpg",
-   "url": "https://dn6q4f0q0kh23.cloudfront.net/receiver/hisense/haystackreceiver.html"
-  },
-  {
-   "appId": "2424",
-   "name": "TeleSat",
-   "icon": "https://img.vidaahub.com/vidaa/2024/12/202412180910303956.jpg",
-   "url": "https://tsnstatic.solocoo.tv/html5"
-  },
-  {
-   "appId": "2366",
-   "name": "Streamz",
-   "icon": "https://img.vidaahub.com/vidaa/2024/8/202408120806036050.png",
-   "url": "https://hisense.streamz.be/release/"
-  },
-  {
-   "appId": "2470",
-   "name": "Ads Privacy",
-   "icon": "https://img.vidaahub.com/vidaa/2025/7/202507140638277461.png",
-   "url": "https://ads-privacy.vidaahub.com/"
-  },
-  {
-   "appId": "2562",
-   "name": "V Home",
-   "icon": "https://img.vidaahub.com/vidaa/2026/3/202603041122457789.jpg",
-   "url": "https://tvmodules-vidaa.vidaahub.com/home-os/V1.0/index-home-os.html?canLaunchingVidaaTV=true"
-  },
-  {
-   "appId": "280",
-   "name": "EON TV",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090922112374.png",
-   "url": "https://vewd.global.united.cloud/"
-  },
-  {
-   "appId": "199",
-   "name": "SWEET.TV",
-   "icon": "https://img.vidaahub.com/vidaa/2025/3/202503070643042862.png",
-   "url": "https://vidaa.sweet.tv/"
-  },
-  {
-   "appId": "79",
-   "name": "Red Bull TV",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090916463905.png",
-   "url": "https://vidaa-v2.redbull.tv"
-  },
-  {
-   "appId": "293",
-   "name": "NBA",
-   "icon": "https://img.vidaahub.com/vidaa/2026/6/202606260558403108.png",
-   "url": "https://cweb-ott.nba.com/"
-  },
-  {
-   "appId": "1411",
-   "name": "Tet+",
-   "icon": "https://img.vidaahub.com/vidaa/2022/11/202211020732586016.png",
-   "url": "https://vidaa.tet.plus/"
-  },
-  {
-   "appId": "47",
-   "name": "DEEZER",
-   "icon": "https://img.vidaahub.com/vidaa/2025/1/202501100241497703.png",
-   "url": "https://tv2.deezer.com/hisense"
-  },
-  {
-   "appId": "338",
-   "name": "GloboPlay",
-   "icon": "https://img.vidaahub.com/vidaa/2026/11/202611021747173892.png",
-   "url": "https://tv.globoplay.com.br/r/index.html"
-  },
-  {
-   "appId": "372",
-   "name": "France24",
-   "icon": "https://img.vidaahub.com/vidaa/2022/2/202202070800239017.png",
-   "url": "https://france24.tv.dotscreen.com/hisense/index.html?languages=EN,FR,ES,AR"
-  },
-  {
-   "appId": "42",
-   "name": "Plex",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090915047445.png",
-   "url": "https://app.plex.tv/tv-vidaa"
-  },
-  {
-   "appId": "234",
-   "name": "AntenaPlay",
-   "icon": "https://img.vidaahub.com/vidaa/2021/11/202111120826471511.png",
-   "url": "https://tv-app.antenaplay.ro/"
-  },
-  {
-   "appId": "162",
-   "name": "DAZN",
-   "icon": "https://img.vidaahub.com/vidaa/2024/5/202405300640297559.png",
-   "url": "https://tv.dazn.com/app/vidaa/"
-  },
-  {
-   "appId": "15",
-   "name": "AccuWeather",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311091029582894.png",
-   "native": true
-  },
-  {
-   "appId": "2243",
-   "name": "Art Gallery",
-   "icon": "https://img.vidaahub.com/vidaa/2025/12/202512030817413563.jpg",
-   "url": "https://tvmodules-vidaa.vidaahub.com/vidaa-art/V1.0/index-vidaa-art.html"
-  },
-  {
-   "appId": "230",
-   "name": "MUBI",
-   "icon": "https://img.vidaahub.com/vidaa/2022/4/202204300235256422.png",
-   "url": "https://tv-production.mubi.com/vidaa/4.0.0/"
-  },
-  {
-   "appId": "36",
-   "name": "ToonGoggles",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311060906446498.png",
-   "url": "https://html5.toongoggles.com/"
-  },
-  {
-   "appId": "355",
-   "name": "UFC",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311090930102217.png",
-   "url": "https://tv.onvesper.com/vidaa/dce.ufc/index.html"
-  },
-  {
-   "appId": "16",
-   "name": "Browser",
-   "icon": "https://img.vidaahub.com/vidaa/2023/11/202311210704287492.png",
-   "native": true,
-   "browser": true
-  },
-  {
-   "appId": "288",
-   "name": "Kyivstar TV",
-   "icon": "https://img.vidaahub.com/vidaa/2024/11/202411260630219393.jpg",
-   "url": "https://prod.hisense.hisense.vidmind.cc/"
-  }
- ],
- "dock": [
-  "3",
-  "295",
-  "167",
-  "2256"
- ],
- "helper_dock": [
-  "1",
-  "3",
-  "2",
-  "295"
- ],
- "sources": [
-  {
-   "id": "TV",
-   "name": "TV Channels▶"
-  },
-  {
-   "id": "HDMI1",
-   "name": "HDMI1"
-  },
-  {
-   "id": "HDMI2",
-   "name": "HDMI2"
-  },
-  {
-   "id": "HDMI3",
-   "name": "HDMI3"
-  },
-  {
-   "id": "AVS",
-   "name": "AV"
-  },
-  {
-   "id": "MusicSharing",
-   "name": "Music Sharing"
-  }
- ],
- "browser": {
-  "search": "https://search.brave.com/search?q=%s",
-  "region": "za-en",
-  "links": [
-   {
-    "name": "Brave Search",
-    "url": "https://search.brave.com/"
-   },
-   {
-    "name": "Wikipedia",
-    "url": "https://www.wikipedia.org/"
-   }
-  ]
- },
- "greeting_name": "",
- "clock_24h": false
+    "apps":  [
+                 {
+                     "appId":  "284",
+                     "name":  "TV Channels▶",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/12/202512030945137285.jpg",
+                     "native":  true,
+                     "bg":  "rgb(13,17,23)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAArSURBVBhXY+ATkrgHwgx8gpKf+QQlvzDwC0m85ROSeAcW4YeK3OETkrgLAPHoC1K9gHLSAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  148,
+                                  136,
+                                  21
+                              ]
+                 },
+                 {
+                     "appId":  "1",
+                     "name":  "Netflix",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090857551807.png",
+                     "native":  true,
+                     "bg":  "rgb(254,254,254)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAkSURBVBhXY/j37989EGb49+/f53///n0BMd7++/fvHYoIWA0AbKUm5hlY8H0AAAAASUVORK5CYII=",
+                     "glow":  [
+                                  237,
+                                  89,
+                                  93
+                              ]
+                 },
+                 {
+                     "appId":  "3",
+                     "name":  "YouTube",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090858299321.png",
+                     "helperFirst":  true,
+                     "url":  "https://www.youtube.com/tv",
+                     "bg":  "rgb(254,254,254)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAkSURBVBhXY/j37989EGb49+/f53///n0BMd7++/fvHYoIWA0AbKUm5hlY8H0AAAAASUVORK5CYII=",
+                     "glow":  [
+                                  255,
+                                  35,
+                                  35
+                              ]
+                 },
+                 {
+                     "appId":  "295",
+                     "name":  "Disney+",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/11/202411260732081526.png",
+                     "url":  "https://cd-dmgz.bamgrid.com/bbd/hisense_tv/index.html",
+                     "bg":  "rgb(1,66,79)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA2SURBVBhXY2BQNb7HoGB4j4HB0O4zg7LJFwYGe5+3DFqW7xgYojM+M9p4fmFgnrzgHltc2j0AI/QOyMYFC14AAAAASUVORK5CYII=",
+                     "glow":  [
+                                  4,
+                                  80,
+                                  94
+                              ]
+                 },
+                 {
+                     "appId":  "2",
+                     "name":  "Prime Video",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/11/202411210932408667.png",
+                     "native":  true,
+                     "bg":  "rgb(7,121,254)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAsSURBVBhXY+Cr/XcPhBn4av595qv994WBv+bfW77af+8QIgK1/+4J1P27BwAXmhh/TxWvCAAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  13,
+                                  124,
+                                  255
+                              ]
+                 },
+                 {
+                     "appId":  "2425",
+                     "name":  "TV Vlaanderen",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/12/202412180908213905.jpg",
+                     "url":  "https://tvvstatic.solocoo.tv/html5",
+                     "bg":  "rgb(253,0,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAqSURBVBhXY/jLwHDvHwPDPYa/DAyf/zIwfAEx3v5lYHiHEPnDyHgPpA4ArUgTBkOWTVsAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  252,
+                                  11,
+                                  11
+                              ]
+                 },
+                 {
+                     "appId":  "2212",
+                     "name":  "VTM GO",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/9/202409230952565463.png",
+                     "url":  "https://hisense.vtmgo.be/release/",
+                     "bg":  "rgb(32,13,40)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVBhXYxBilboHwgySnIqfJTkVvzAo8Gq8VeDVeMegJmjwWU3Q4AuDjpj5PV0x83sA/zwMdT93jVgAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  176,
+                                  5,
+                                  158
+                              ]
+                 },
+                 {
+                     "appId":  "2568",
+                     "name":  "Stremio Lite",
+                     "icon":  "https://img.vidaahub.com/s3_bucket/9999/app/9999_80d92da5-01bf-4416-b46b-901c63b257d1/a14b838fd3d7a02375371564a0545f89?f=webp\u0026resize=w_300,h_300",
+                     "url":  "https://relvhgchz5.strem.io/hello-world/index.html"
+                 },
+                 {
+                     "appId":  "2378",
+                     "name":  "HBO Max",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/7/202507091016437937.png",
+                     "url":  "https://vidaa.play-hbo.max.com",
+                     "bg":  "rgb(5,8,18)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXY2Bk5rnHAMKsXEKfWTmFvjBw8oq/5eQVf8fAyin0mY1L6AsDSB6kDgDYwQo92hQ//AAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  16,
+                                  21,
+                                  31
+                              ]
+                 },
+                 {
+                     "appId":  "2583",
+                     "name":  "VRT Max",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/12/202512290305352655.png",
+                     "url":  "https://vidaa-tv.vrt.be",
+                     "bg":  "rgb(254,73,66)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAoSURBVBhXY/jn6Xjvn6fTPYZ/nk6f/3k6fWH45+n49p+H0zsUEbAaACgLGHiYOTweAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  255,
+                                  77,
+                                  70
+                              ]
+                 },
+                 {
+                     "appId":  "351",
+                     "name":  "Apple TV",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/11/202511050649298835.png",
+                     "url":  "https://atve.tv.apple.com/94819831-5404-4438-810e-afb648d6a826/tvw_1dc2aab0a313427dbc11818be8a18bd9/",
+                     "bg":  "rgb(34,34,34)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVBhXY9DV1b2nr69/j0FdXf2zhobGFwYlJaW3SkpK7xhkZGQ+y8jIfGEQFRW9B8IAJ6cNFZ2pASAAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  148,
+                                  159,
+                                  162
+                              ]
+                 },
+                 {
+                     "appId":  "2584",
+                     "name":  "XBOX",
+                     "icon":  "https://img.vidaahub.com/vidaa/2026/6/202606290146355685.jpg",
+                     "url":  "https://play.xbox.com/_external/init",
+                     "bg":  "rgb(0,0,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAgSURBVBhXY2BgYLgHxQyfGRgYvoAYbxkYGN6hiIDVAAC/3AkiZUSi/wAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  34,
+                                  61,
+                                  6
+                              ]
+                 },
+                 {
+                     "appId":  "1947",
+                     "name":  "TF1+",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/1/202401080924346571.png",
+                     "url":  "https://smart-tv-vidaa.prod.p.tf1.fr/?source=atf",
+                     "bg":  "rgb(22,49,235)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA0SURBVBhXY5Aw/3cPhBkkzf59ljT794VBwvzfWwnzf+8YxI3ffxYzfv+FQVB5/T1B5Q33ANxsFSi1kCL6AAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  25,
+                                  52,
+                                  239
+                              ]
+                 },
+                 {
+                     "appId":  "65",
+                     "name":  "Rakuten TV",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090900492844.png",
+                     "url":  "https://prod-hisense-ui40-app.rakuten.tv/",
+                     "bg":  "rgb(192,0,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVBhXY9jPwHAPhBkOMjB8PsDA8IXhAAPD2/0MDO8QIjA1AHOpEJ8Bwt4wAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  193,
+                                  3,
+                                  3
+                              ]
+                 },
+                 {
+                     "appId":  "244",
+                     "name":  "UEFA.tv",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090919094943.png",
+                     "url":  "https://dice-tv.imggaming.com/vidaa/dce.uefatv/index.html#/",
+                     "bg":  "rgb(1,24,79)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXY2DiN7/CIJNylYGJ3+wlg2zKKwYmfvPHDFLJT8AiTGrZYJErTOo5VwENUAzM1ux4bgAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  4,
+                                  26,
+                                  84
+                              ]
+                 },
+                 {
+                     "appId":  "2256",
+                     "name":  "Spotify",
+                     "icon":  "https://img.vidaahub.com/vidaa/2026/5/202605290216573337.jpg",
+                     "url":  "https://api-partner.spotify.com/tvapp?platform=vidaa",
+                     "bg":  "rgb(30,215,96)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAmSURBVBhXY5C9Fn9P9nrCPQa56/Gf5a4nfAEx3speT3iHEIGpAQDulRZohiAhsgAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  30,
+                                  212,
+                                  95
+                              ]
+                 },
+                 {
+                     "appId":  "2372",
+                     "name":  "Crunchyroll",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/9/202409041444508945.png",
+                     "url":  "https://www.crunchyroll.com/tetsuo/hisense-vidaa/",
+                     "bg":  "rgb(254,94,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAmSURBVBhXY/gXy3DvXxzDPYZ/sQyf/8UxfAEx3v6LY3iHIgJWAwACERa1Agq7SgAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  255,
+                                  96,
+                                  5
+                              ]
+                 },
+                 {
+                     "appId":  "245",
+                     "name":  "Triller TV.",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/1/202401240916139001.png",
+                     "url":  "https://ott-apps.fite.tv/hisense/index.html",
+                     "bg":  "rgb(254,254,254)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAkSURBVBhXY/j37989EGb49+/f53///n0BMd7++/fvHYoIWA0AbKUm5hlY8H0AAAAASUVORK5CYII=",
+                     "glow":  [
+                                  233,
+                                  64,
+                                  64
+                              ]
+                 },
+                 {
+                     "appId":  "227",
+                     "name":  "Haystack TV Local + World News",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/12/202412101945116636.jpg",
+                     "url":  "https://dn6q4f0q0kh23.cloudfront.net/receiver/hisense/haystackreceiver.html",
+                     "bg":  "rgb(228,58,46)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAoSURBVBhXY3hsrX/vibX+PYbH1vqfH1vrf2F4YqP/9om1/juECEwNAPKWFimlrwZ/AAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  230,
+                                  64,
+                                  51
+                              ]
+                 },
+                 {
+                     "appId":  "2424",
+                     "name":  "TeleSat",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/12/202412180910303956.jpg",
+                     "url":  "https://tsnstatic.solocoo.tv/html5",
+                     "bg":  "rgb(253,0,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAmSURBVBhXY/jLwHDvHwPDPYa/DAyf/zIwfAEx3v5lYHiHIgJWAwCtRxMG3PEL3wAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  252,
+                                  11,
+                                  11
+                              ]
+                 },
+                 {
+                     "appId":  "2366",
+                     "name":  "Streamz",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/8/202408120806036050.png",
+                     "url":  "https://hisense.streamz.be/release/",
+                     "bg":  "rgb(84,22,28)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXY7Dn4LrHxCB0j+HfNP7PTAyCXxi+WPq9ZWIQesfwgMERImLPLAVWAwBJDQ5whMADgAAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  201,
+                                  45,
+                                  48
+                              ]
+                 },
+                 {
+                     "appId":  "2470",
+                     "name":  "Ads Privacy",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/7/202507140638277461.png",
+                     "url":  "https://ads-privacy.vidaahub.com/",
+                     "bg":  "rgb(16,18,25)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVBhXYxAQkrwHwgz8glKf+QWlvjAICEm+FRCSfIciAlYDAPQgC2z1qotDAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  123,
+                                  77,
+                                  206
+                              ]
+                 },
+                 {
+                     "appId":  "2562",
+                     "name":  "V Home",
+                     "icon":  "https://img.vidaahub.com/vidaa/2026/3/202603041122457789.jpg",
+                     "url":  "https://tvmodules-vidaa.vidaahub.com/home-os/V1.0/index-home-os.html?canLaunchingVidaaTV=true",
+                     "bg":  "rgb(0,0,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAjSURBVBhXY2BgYLgHxQyfGRgYvoAYbxkYGN6hiNxhYGC4CwC/0QkfjU9TbQAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  115,
+                                  107,
+                                  0
+                              ]
+                 },
+                 {
+                     "appId":  "280",
+                     "name":  "EON TV",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090922112374.png",
+                     "url":  "https://vewd.global.united.cloud/",
+                     "bg":  "rgb(231,231,232)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAtSURBVBhXY/j379+9O3fu3GP49/ff59u3b39h+Lvv79tlz1a/A4vcAonA1AAAM/okQBpyM00AAAAASUVORK5CYII=",
+                     "glow":  [
+                                  96,
+                                  196,
+                                  204
+                              ]
+                 },
+                 {
+                     "appId":  "199",
+                     "name":  "SWEET.TV",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/3/202503070643042862.png",
+                     "url":  "https://vidaa.sweet.tv/",
+                     "bg":  "rgb(32,190,198)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAApSURBVBhXY1DYe/Sewr5j9xgU9h37rLD/2BcGhX1H3yrsO/YOSQSqBgAyhhmHidJZwgAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  37,
+                                  190,
+                                  197
+                              ]
+                 },
+                 {
+                     "appId":  "79",
+                     "name":  "Red Bull TV",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090916463905.png",
+                     "url":  "https://vidaa-v2.redbull.tv",
+                     "bg":  "rgb(4,30,57)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVBhXY2CVt7wHwgys8pafWeUtvzCwylu9ZZW3fIcsAlEDABGJDMUgiQwIAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  82,
+                                  48,
+                                  63
+                              ]
+                 },
+                 {
+                     "appId":  "293",
+                     "name":  "NBA",
+                     "icon":  "https://img.vidaahub.com/vidaa/2026/6/202606260558403108.png",
+                     "url":  "https://cweb-ott.nba.com/",
+                     "bg":  "rgb(24,27,34)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAnSURBVBhXY5CQVrotIa10h0FSRvmDpIzSRwZJGaVXEjJKrxEiMDUACskMZeGOBTwAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  129,
+                                  65,
+                                  97
+                              ]
+                 },
+                 {
+                     "appId":  "1411",
+                     "name":  "Tet+",
+                     "icon":  "https://img.vidaahub.com/vidaa/2022/11/202211020732586016.png",
+                     "url":  "https://vidaa.tet.plus/",
+                     "bg":  "rgb(1,5,11)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAjSURBVBhXY2Bk5b4HwgyMrNyfGVm5v4AYbxlZud+hiIDVAADOvgnMagVIYwAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  9,
+                                  28,
+                                  32
+                              ]
+                 },
+                 {
+                     "appId":  "47",
+                     "name":  "DEEZER",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/1/202501100241497703.png",
+                     "url":  "https://tv2.deezer.com/hisense",
+                     "bg":  "rgb(0,0,0)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAgSURBVBhXY2BgYLgHxQyfGRgYvoAYbxkYGN6hiIDVAAC/3AkiZUSi/wAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  147,
+                                  51,
+                                  227
+                              ]
+                 },
+                 {
+                     "appId":  "338",
+                     "name":  "GloboPlay",
+                     "icon":  "https://img.vidaahub.com/vidaa/2026/11/202611021747173892.png",
+                     "url":  "https://tv.globoplay.com.br/r/index.html",
+                     "bg":  "rgb(245,2,52)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAmSURBVBhXY/jCZHzvC7PJPYavTMafvzKbfAYx3n5lNnmLEIGpAQDTbxTJQyqw2wAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  246,
+                                  7,
+                                  55
+                              ]
+                 },
+                 {
+                     "appId":  "372",
+                     "name":  "France24",
+                     "icon":  "https://img.vidaahub.com/vidaa/2022/2/202202070800239017.png",
+                     "url":  "https://france24.tv.dotscreen.com/hisense/index.html?languages=EN,FR,ES,AR",
+                     "bg":  "rgb(34,168,220)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAySURBVBhXYxBbevue4MLb9xgklt7+LLDw1hcG8aW333LOu/kOLGK98cEXEONe5pEX9wAlfRmQto/DSgAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  31,
+                                  168,
+                                  221
+                              ]
+                 },
+                 {
+                     "appId":  "42",
+                     "name":  "Plex",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090915047445.png",
+                     "url":  "https://app.plex.tv/tv-vidaa",
+                     "bg":  "rgb(254,254,254)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAkSURBVBhXY/j37989EGb49+/f53///n0BMd7++/fvHYoIWA0AbKUm5hlY8H0AAAAASUVORK5CYII=",
+                     "glow":  [
+                                  212,
+                                  150,
+                                  43
+                              ]
+                 },
+                 {
+                     "appId":  "234",
+                     "name":  "AntenaPlay",
+                     "icon":  "https://img.vidaahub.com/vidaa/2021/11/202111120826471511.png",
+                     "url":  "https://tv-app.antenaplay.ro/",
+                     "bg":  "rgb(20,20,20)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVBhXYxAWFr4pLCx8i0FYWPidsLDwexDjhbCw8EsUEbAaAO8eCyx9jk5DAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  43,
+                                  135,
+                                  162
+                              ]
+                 },
+                 {
+                     "appId":  "162",
+                     "name":  "DAZN",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/5/202405300640297559.png",
+                     "url":  "https://tv.dazn.com/app/vidaa/",
+                     "bg":  "rgb(7,13,18)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVBhXY+DgFboHwgzsvIKf2XkFvzCw8wq9ZecVeocQgakBAOGaCp4lpC+uAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  7,
+                                  13,
+                                  17
+                              ]
+                 },
+                 {
+                     "appId":  "15",
+                     "name":  "AccuWeather",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311091029582894.png",
+                     "native":  true,
+                     "bg":  "rgb(243,111,33)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAoSURBVBhXY/iUp3jvc77iPYbP+YqfP+crfmH4nKf49nO+4juECEwNACNhGDtgN6NyAAAAAElFTkSuQmCC",
+                     "glow":  [
+                                  244,
+                                  114,
+                                  37
+                              ]
+                 },
+                 {
+                     "appId":  "2243",
+                     "name":  "Art Gallery",
+                     "icon":  "https://img.vidaahub.com/vidaa/2025/12/202512030817413563.jpg",
+                     "url":  "https://tvmodules-vidaa.vidaahub.com/vidaa-art/V1.0/index-vidaa-art.html",
+                     "bg":  "rgb(26,160,203)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVBhXY5Caf/qe1IIz9xikF5z+LL3g9BcGqQWn30otOP0OSWTh6TtSC87cBQAW5xhXULgycAAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  31,
+                                  162,
+                                  205
+                              ]
+                 },
+                 {
+                     "appId":  "230",
+                     "name":  "MUBI",
+                     "icon":  "https://img.vidaahub.com/vidaa/2022/4/202204300235256422.png",
+                     "url":  "https://tv-production.mubi.com/vidaa/4.0.0/",
+                     "bg":  "rgb(0,20,136)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAnSURBVBhXY2AQ6bjHINJ5j4FBuOMzg3DHFwYGkY63DCKd71BEwGoARqMPOTHovJYAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  3,
+                                  22,
+                                  139
+                              ]
+                 },
+                 {
+                     "appId":  "36",
+                     "name":  "ToonGoggles",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311060906446498.png",
+                     "url":  "https://html5.toongoggles.com/",
+                     "bg":  "rgb(134,149,150)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA4SURBVBhXAS0A0v8ASozK3kqKyt4ASY3L80qMyvQAQonQ7UKIz+4AzaVo88ymaPQA/qQh3v6lId47nRoQjXIdkAAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  152,
+                                  166,
+                                  144
+                              ]
+                 },
+                 {
+                     "appId":  "355",
+                     "name":  "UFC",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311090930102217.png",
+                     "url":  "https://tv.onvesper.com/vidaa/dce.ufc/index.html",
+                     "bg":  "rgb(210,10,10)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAmSURBVBhXY7jExXXvMhfXPYZLXFyfL3NxfQEx3l7m4nqHIgJWAwCWzRIjYyOpBgAAAABJRU5ErkJggg==",
+                     "glow":  [
+                                  212,
+                                  14,
+                                  13
+                              ]
+                 },
+                 {
+                     "appId":  "16",
+                     "name":  "Browser",
+                     "icon":  "https://img.vidaahub.com/vidaa/2023/11/202311210704287492.png",
+                     "native":  true,
+                     "browser":  true,
+                     "bg":  "rgb(35,39,47)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA2SURBVBhXYxCVULinoW18j0FSRvmzurbxFwYFZZ236trG7xjUdc0+a+iYfGHQMbS6p6Khfw8AJmQN6iiyeZQAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  35,
+                                  39,
+                                  47
+                              ]
+                 },
+                 {
+                     "appId":  "288",
+                     "name":  "Kyivstar TV",
+                     "icon":  "https://img.vidaahub.com/vidaa/2024/11/202411260630219393.jpg",
+                     "url":  "https://prod.hisense.hisense.vidmind.cc/",
+                     "bg":  "rgb(21,33,57)",
+                     "backdrop":  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAFCAYAAABvsz2cAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAA2SURBVBhXYxBRsbsnomJ/j0FYxe6ziIrdFwYRJZu3IkrW7xhE5M0+i8qbfWEQlTG8JyZjdA8AJZENdmRaYmUAAAAASUVORK5CYII=",
+                     "glow":  [
+                                  129,
+                                  165,
+                                  24
+                              ]
+                 }
+             ],
+    "dock":  [
+                 "3",
+                 "295",
+                 "167",
+                 "2256"
+             ],
+    "helper_dock":  [
+                        "1",
+                        "3",
+                        "2",
+                        "295"
+                    ],
+    "sources":  [
+                    {
+                        "id":  "TV",
+                        "name":  "TV Channels▶"
+                    },
+                    {
+                        "id":  "HDMI1",
+                        "name":  "HDMI1"
+                    },
+                    {
+                        "id":  "HDMI2",
+                        "name":  "HDMI2"
+                    },
+                    {
+                        "id":  "HDMI3",
+                        "name":  "HDMI3"
+                    },
+                    {
+                        "id":  "AVS",
+                        "name":  "AV"
+                    },
+                    {
+                        "id":  "MusicSharing",
+                        "name":  "Music Sharing"
+                    }
+                ],
+    "browser":  {
+                    "search":  "https://search.brave.com/search?q=%s",
+                    "region":  "za-en",
+                    "links":  [
+                                  {
+                                      "name":  "Brave Search",
+                                      "url":  "https://search.brave.com/"
+                                  },
+                                  {
+                                      "name":  "Wikipedia",
+                                      "url":  "https://www.wikipedia.org/"
+                                  }
+                              ]
+                },
+    "greeting_name":  "",
+    "clock_24h":  false
 }
