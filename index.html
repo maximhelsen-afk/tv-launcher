@@ -37,9 +37,30 @@
     animation: fall2 .8s linear infinite; }
   @keyframes fall1 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 160px, 0); } }
   @keyframes fall2 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 256px, 0); } }
-  body.night #night, body.night #rain { opacity: 1; }
+  /* The tint follows the time of day (the page sets body classes p-morning / p-day / p-evening / p-night) and the weather (wx-clear / cloudy / fog / rain / snow / storm). */
+  body.p-evening #night { opacity: .5; }
+  body.p-night #night { opacity: 1; }
+  body.wx-rain.p-morning #night, body.wx-rain.p-day #night { opacity: .18; }
+  body.wx-storm.p-morning #night, body.wx-storm.p-day #night { opacity: .3; }
+  body.wx-rain #rain, body.wx-storm #rain { opacity: 1; }
+  body.wx-snow #snow { opacity: 1; }
+  /* Snow: two layers of soft flakes, drifting down slowly and swaying a little. */
+  #snow { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 4s ease; }
+  #snow i { position: absolute; left: 0; width: 1920px; display: block; will-change: transform; }
+  #snow .s1 { top: -300px; height: 1380px; opacity: .85;
+    background: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cg fill='white'%3E%3Ccircle cx='30' cy='40' r='3.2'/%3E%3Ccircle cx='120' cy='20' r='2.2'/%3E%3Ccircle cx='210' cy='70' r='3.6'/%3E%3Ccircle cx='270' cy='150' r='2.4'/%3E%3Ccircle cx='80' cy='130' r='2.8'/%3E%3Ccircle cx='170' cy='190' r='3.2'/%3E%3Ccircle cx='40' cy='240' r='2.2'/%3E%3Ccircle cx='235' cy='255' r='3'/%3E%3Ccircle cx='140' cy='280' r='2.4'/%3E%3C/g%3E%3C/svg%3E");
+    animation: snow1 7s linear infinite; }
+  #snow .s2 { top: -480px; height: 1560px; opacity: .6;
+    background: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cg fill='white'%3E%3Ccircle cx='60' cy='70' r='2'/%3E%3Ccircle cx='200' cy='30' r='1.6'/%3E%3Ccircle cx='340' cy='110' r='2.2'/%3E%3Ccircle cx='430' cy='240' r='1.8'/%3E%3Ccircle cx='120' cy='210' r='2'/%3E%3Ccircle cx='280' cy='300' r='1.6'/%3E%3Ccircle cx='50' cy='400' r='2.2'/%3E%3Ccircle cx='380' cy='430' r='1.8'/%3E%3Ccircle cx='210' cy='450' r='2'/%3E%3Ccircle cx='450' cy='40' r='1.6'/%3E%3C/g%3E%3C/svg%3E");
+    animation: snow2 12s linear infinite; }
+  @keyframes snow1 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 300px, 0); } }
+  @keyframes snow2 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 480px, 0); } }
+  /* Storm: now and then a pale flash. */
+  #flash { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0; background: rgba(210,225,255,.55); }
+  body.wx-storm #flash { animation: flash 11s linear infinite; }
+  @keyframes flash { 0%, 92%, 100% { opacity: 0; } 93% { opacity: .75; } 94% { opacity: .05; } 95.5% { opacity: .55; } 98% { opacity: 0; } }
   /* Blurring a moving picture every frame is heavy for a TV: in the evening the dock is simply tinted. */
-  body.night #band { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.04)), rgba(14,20,34,.72); }
+  body.fx #band { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.04)), rgba(14,20,34,.72); }
   /* This theme has no coloured glow behind the focused app. */
   .ambient { display: none; }
   /* Ambient glow in the focused app's colour: two layers so one colour can fade into the next. */
@@ -176,7 +197,7 @@
 </style>
 </head>
 <body>
-<div class="wp" id="wpA"></div><div class="wp" id="wpB"></div><div id="wpShade"></div><div id="night"></div><div id="rain"><i class="r1"></i><i class="r2"></i></div><div id="caption"></div>
+<div class="wp" id="wpA"></div><div class="wp" id="wpB"></div><div id="wpShade"></div><div id="night"></div><div id="rain"><i class="r1"></i><i class="r2"></i></div><div id="snow"><i class="s1"></i><i class="s2"></i></div><div id="flash"></div><div id="caption"></div>
 <div class="ambient" id="ambientA"></div>
 <div class="ambient" id="ambientB"></div>
 
@@ -894,79 +915,166 @@
 })();
 </script>
 <script>
-// Wallpaper: the theme's eight photos, one every 5 minutes, in order; the next one is loaded before it fades in.
+// Wallpaper: a photo for the time of day and the weather. Time of day comes from the sun (sunrise and sunset of the TV's place), the weather from Open-Meteo
+// (https://open-meteo.com, no key). The place is in the tile's address (?lat=..&lon=.., rounded to a city); without it the weather is taken as clear.
+// For trying it out: ?wx=snow (clear, cloudy, fog, rain, snow, storm) and ?period=night (morning, day, evening, night); ?diag=1 prints what the page decided.
 (function () {
   try {
-    // Evening photos: Japan at night, from Unsplash (free licence); the photographers are named in the caption and in wallpapers/CREDITS.md.
-    var nightPhotos = [
-      ['j1-pagoda-dusk.jpg', 'Pagoda at dusk, Japan · Su San Lee'],
-      ['j2-shibuya-neon.jpg', 'Shibuya at night, Tokyo · Jezael Melgoza'],
-      ['j3-narrow-street.jpg', 'Narrow street at night, Japan · Marek Piwnicki'],
-      ['j4-fuji-night.jpg', 'Mount Fuji at night · Clay Banks'],
-      ['j5-street-pagoda.jpg', 'Old street with a pagoda at night · Tom Podmore'],
-      ['j6-tokyo-tower.jpg', 'Tokyo Tower at night · Marek Okon'],
-      ['j7-city-aerial.jpg', 'Tokyo at night from above · Takashi Miyazaki'],
-      ['j8-japanese-alley.jpg', 'Quiet alley at night, Japan · Andre Benz']
-    ];
-    var dayPhotos = [
-      ['01-alps-switzerland.jpg', 'Swiss Alps, Switzerland'],
-      ['02-atacama-chile.jpg', 'Atacama Desert, Chile'],
-      ['03-blue-horizons.jpg', 'Blue Horizons & Emerald Shores'],
-      ['04-emerald-lake.jpg', 'Emerald Lake & Mountains'],
-      ['05-occitanie-france.jpg', 'Taüll, Catalan Pyrenees, Spain'],
-      ['06-alpine-waterscape.jpg', 'Alpine Waterscape & Mountain Peaks'],
-      ['07-mount-baker.jpg', 'Mount Baker, Washington'],
-      ['08-shrine-pass-road.jpg', 'Shrine Pass, Colorado']
-    ];
+    // Photographers (Unsplash, free licence); also in wallpapers/CREDITS.md.
+    var BY = {
+      j2: 'Jezael Melgoza', j3: 'Marek Piwnicki', j4: 'Clay Banks', j5: 'Tom Podmore', j6: 'Marek Okon', j7: 'Takashi Miyazaki', j8: 'Andre Benz', j1: 'Su San Lee',
+      S05: 'Sora Sagano', S07: 'Ryoji Iwata', S11: 'Soyoung HAN', S03: 'Feiyou Guo', B06: 'urusy', B09: 'Matt Ketchum', B07: 'urusy', B05: 'Hayley Lyla', B04: 'Sora Yamagake',
+      S10: 'Fabio Montello', S14: 'Jonathan Cho', S16: 'ibmoon Kim', S08: 'Andre Benz', C01: 'Manuel Cosentino', C06: 'Cuvii', C04: 'shun idota', C03: 'Cosmin Georgian',
+      C08: 'Wenhao Ruan', C05: 'Nicholas Turner', S18: 'Sergey Gladyshev', S09: 'Ronin', S17: 'Tsukada Kazuhiro', X04: 'Deniz Demir', F06: 'Kohji Asakawa',
+      F02: 'Sebastian Herrmann', F05: 'Siborey Sean', F08: 'Nizar F', F01: 'Uljana Vasiljeva', F03: 'Nopparuj Lamaikul', F09: 'Nopparuj Lamaikul', F07: 'Cuvii',
+      R13: 'Joss Woodhead', R06: 'Jivan Garcha', R14: 'Md Samir Sayek', R01: 'Atul Vinayak', R02: 'Tianshu Liu', R03: 'Lisheng Chang', R04: 'Andre Benz',
+      R19: 'Evgeny Matveev', R07: 'masahiro miyagi', R05: 'Ling Tang', R09: 'Jase Bloor', R11: 'masahiro miyagi', R12: 'masahiro miyagi', R15: 'Pema G. Lama',
+      R18: 'Christian Ladewig', X01: 'BREAKIFY', X05: 'Raphael Lopes', X06: 'ayumi kubo', N01: 'Fabian Mardi', N08: 'Hyungman Jeon', N03: 'Seiya Maeda',
+      N04: 'Samuel Berner', N07: 'Samuel Berner', N10: 'Natalie Su', N13: 'Plainery n.', N14: 'Tsuyoshi Kozu', R20: 'Tsuyoshi Kozu', N02: 'Julien', N05: 'Julien',
+      N09: 'Julien', N11: 'Julien', N16: 'Tsuyoshi Kozu', N12: 'Natalie Su', T04: 'Charles Devaux', T03: 'Terumi Tokino', T02: 'Syuhei Inoue', T08: 'Kenny Gaines',
+      T05: 'Stefan Szankowski', T07: 'Stefan Szankowski', T01: 'Tsuyoshi Kozu', T06: 'Tsuyoshi Kozu'
+    };
+    function P(code, text) { return [code + '.jpg', text + ' · ' + BY[code]]; }
+    function J(file, code, text) { return [file, text + ' · ' + BY[code]]; }
+    var LIB = {
+      clear: {
+        morning: [P('S05', 'Sunrise over the mountains'), P('S07', 'Dawn over a quiet lake'), P('S11', 'Mount Fuji at dawn'), P('S03', 'Mount Fuji and a torii at dawn')],
+        day: [P('B06', 'Blue sky over the bay'), P('B09', 'Sun over the mountains and lake'), P('B07', 'Bridge over a blue sea'), P('B05', 'Torii under a blue sky'),
+              P('B04', 'City skyline under blue sky and clouds'),
+              ['01-alps-switzerland.jpg', 'Swiss Alps, Switzerland'], ['04-emerald-lake.jpg', 'Emerald Lake & Mountains'],
+              ['06-alpine-waterscape.jpg', 'Alpine Waterscape & Mountain Peaks'], ['07-mount-baker.jpg', 'Mount Baker, Washington']],
+        evening: [P('S10', 'Torii at sunset'), P('S14', 'City at golden hour'), P('S16', 'Sunset over the water'), P('S08', 'Red sky over a temple'), J('j1-pagoda-dusk.jpg', 'j1', 'Pagoda at dusk')],
+        night: [J('j2-shibuya-neon.jpg', 'j2', 'Shibuya at night, Tokyo'), J('j3-narrow-street.jpg', 'j3', 'Narrow street at night'), J('j4-fuji-night.jpg', 'j4', 'Mount Fuji at night'),
+                J('j5-street-pagoda.jpg', 'j5', 'Old street with a pagoda at night'), J('j6-tokyo-tower.jpg', 'j6', 'Tokyo Tower at night'),
+                J('j7-city-aerial.jpg', 'j7', 'Tokyo at night from above'), J('j8-japanese-alley.jpg', 'j8', 'Quiet alley at night')]
+      },
+      cloudy: {
+        morning: [P('C01', 'Mount Fuji and Chureito Pagoda'), P('C06', 'City under a cloudy sky')],
+        day: [P('C04', 'Pagoda under a cloudy sky'), P('C03', 'Pagoda under a white and blue sky'), P('C08', 'Cityscape under clouds'), P('C05', 'Mount Fuji above the clouds')],
+        evening: [P('S18', 'Hazy city at dusk'), P('S09', 'Temple and city at dusk'), P('S17', 'Coast at dusk')],
+        night: [P('X04', 'City at night from above'), P('F06', 'Bridge over the river at night')]
+      },
+      fog: {
+        morning: [P('F02', 'Mist over the mountain'), P('F05', 'Forest valley in mist'), P('F08', 'Misty road in the countryside')],
+        day: [P('F01', 'Hazy city'), P('F03', 'Foggy station square'), P('F09', 'Foggy car park'), P('F07', 'Hazy skyline')],
+        evening: [P('F07', 'Hazy skyline')]
+      },
+      rain: {
+        morning: [P('R13', 'Lantern in the rain'), P('R06', 'Rainy park with umbrellas'), P('R14', 'Rainy walk by the bridge')],
+        day: [P('R01', 'Rain over the city streets'), P('R02', 'Umbrella on a wet street'), P('R14', 'Rainy walk by the bridge'), P('R13', 'Lantern in the rain')],
+        evening: [P('R03', 'Wet alley at dusk'), P('R04', 'Umbrellas in a quiet street'), P('R19', 'Wet street with a red glow'), P('R07', 'Reflections after the rain')],
+        night: [P('R05', 'Rainy night in the city'), P('R09', 'Neon and umbrellas'), P('R11', 'Rainy night street'), P('R12', 'Rain in a neon alley'), P('R15', 'Neon street in the rain'),
+                P('R18', 'City lights through raindrops'), P('X01', 'Wet night alley'), P('X05', 'Rainy crossing at night'), P('X06', 'Quiet street in the rain')]
+      },
+      snow: {
+        morning: [P('N01', 'Snow-covered hut'), P('N08', 'Snowed-in village'), P('N03', 'Snowy street')],
+        day: [P('N04', 'Temple in the snow'), P('N07', 'Pagoda in the snow'), P('N10', 'Bell tower and pine in the snow'), P('N01', 'Snow-covered hut')],
+        evening: [P('N13', 'Snowy street at dusk'), P('N14', 'Snowy arcade at dusk'), P('R20', 'Snow on a city corner')],
+        night: [P('N02', 'Snowy street at night'), P('N05', 'Snowy alley at night'), P('N09', 'Snow falling in an alley'), P('N11', 'Train in the snowy night'),
+                P('N16', 'Snowstorm in the city'), P('N12', 'Snowy town at night')]
+      },
+      storm: {
+        morning: [P('T04', 'Clouds over the mountains'), P('T03', 'Storm cloud over the hills')],
+        day: [P('T02', 'Dark clouds over the lake'), P('T08', 'Grey storm clouds over the city'), P('T04', 'Clouds over the mountains')],
+        evening: [P('T05', 'Storm clouds over Tokyo'), P('T07', 'Heavy clouds at dusk'), P('T01', 'Storm over the skyline')],
+        night: [P('T06', 'Dark sky over the city'), P('T01', 'Storm over the skyline')]
+      }
+    };
+    // When a weather has no photo for a time of day, the next weather in the chain supplies one; then a neighbouring time of day.
+    var CHAIN = { clear: ['clear'], cloudy: ['cloudy', 'clear'], fog: ['fog', 'cloudy', 'clear'], rain: ['rain', 'cloudy', 'clear'], snow: ['snow', 'cloudy', 'clear'], storm: ['storm', 'rain', 'cloudy', 'clear'] };
+    var NEAR = { morning: ['morning', 'day'], day: ['day', 'morning'], evening: ['evening', 'night', 'day'], night: ['night', 'evening'] };
+    function pick(wx, period) {
+      var chain = CHAIN[wx] || CHAIN.clear, i, j, list;
+      for (i = 0; i < chain.length; i++) { list = LIB[chain[i]][period]; if (list && list.length) return list; }
+      for (i = 0; i < chain.length; i++) for (j = 1; j < NEAR[period].length; j++) { list = LIB[chain[i]][NEAR[period][j]]; if (list && list.length) return list; }
+      return LIB.clear.day;
+    }
+
+    function param(n) { var m = new RegExp('[?&]' + n + '=([^&]*)').exec(location.search); return m ? decodeURIComponent(m[1]) : ''; }
+    var forcedWx = param('wx'), forcedPeriod = param('period'), theme = param('theme');
+    if (!forcedPeriod && (theme === 'night' || theme === 'day')) forcedPeriod = theme;
+    var lat = parseFloat(param('lat')), lon = parseFloat(param('lon')), haveLoc = isFinite(lat) && isFinite(lon), wxErr = '';
+
+    // Weather state: the code, sunrise and sunset (minutes since midnight). Kept for a while in case the weather service cannot be reached.
+    var wxState = { wx: 'clear', code: -1, sr: 7 * 60, ss: 17 * 60 + 30 };
+    try { var saved = JSON.parse(localStorage.getItem('cyt-wx') || 'null'); if (saved && saved.t && Date.now() - saved.t < 3 * 3600 * 1000) wxState = saved; } catch (e) {}
+    function wxOf(c) { return c <= 2 ? 'clear' : c === 3 ? 'cloudy' : (c === 45 || c === 48) ? 'fog' : (c >= 51 && c <= 67) || (c >= 80 && c <= 82) ? 'rain' : (c >= 71 && c <= 77) || c === 85 || c === 86 ? 'snow' : c >= 95 ? 'storm' : 'cloudy'; }
+    function mins(s) { var m = /T(\d\d):(\d\d)/.exec(s || ''); return m ? (+m[1]) * 60 + (+m[2]) : null; }
+    function fetchWeather() {
+      if (!haveLoc) return;
+      try {
+        var x = new XMLHttpRequest();
+        x.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + lat.toFixed(2) + '&longitude=' + lon.toFixed(2) + '&current=weather_code&daily=sunrise,sunset&timezone=auto&forecast_days=1');
+        x.timeout = 15000;
+        x.onload = function () {
+          try {
+            var d = JSON.parse(x.responseText), sr = mins(d.daily.sunrise[0]), ss = mins(d.daily.sunset[0]);
+            wxState.code = d.current.weather_code; wxState.wx = wxOf(wxState.code);
+            if (sr !== null) wxState.sr = sr;
+            if (ss !== null) wxState.ss = ss;
+            wxState.t = Date.now(); wxErr = '';
+            try { localStorage.setItem('cyt-wx', JSON.stringify(wxState)); } catch (e) {}
+            apply();
+          } catch (e) { wxErr = 'parse'; }
+        };
+        x.onerror = function () { wxErr = 'net'; };
+        x.ontimeout = function () { wxErr = 'timeout'; };
+        x.send();
+      } catch (e) { wxErr = 'xhr'; }
+    }
+    // Morning from half an hour before sunrise, day from about 11:00, evening from an hour and a half before sunset, night three quarters of an hour after it.
+    function periodNow() {
+      var d = new Date(), t = d.getHours() * 60 + d.getMinutes(), sr = wxState.sr, ss = wxState.ss;
+      var dayFrom = Math.max(660, sr + 150), eveFrom = ss - 90, nightFrom = ss + 45;
+      if (t >= sr - 30 && t < dayFrom) return 'morning';
+      if (t >= dayFrom && t < eveFrom) return 'day';
+      if (t >= eveFrom && t < nightFrom) return 'evening';
+      return 'night';
+    }
+
     var layers = [document.getElementById('wpA'), document.getElementById('wpB')], cap = document.getElementById('caption');
-    // Day and evening: the evening look (Japan at night, dark, rain) runs from NIGHT_FROM to NIGHT_TO o'clock. ?theme=night or ?theme=day forces one, for trying it out.
-    var NIGHT_FROM = 17, NIGHT_TO = 7;
-    var forced = /[?&]theme=(day|night)/.exec(location.search);
-    function isNight() { if (forced) return forced[1] === 'night'; var h = new Date().getHours(); return h >= NIGHT_FROM || h < NIGHT_TO; }
-    var night = isNight(), photos = night ? nightPhotos : dayPhotos, key = night ? 'cyt-wp-night' : 'cyt-wp-day';
-    var idx = 0, front = 0;
-    try { idx = ((parseInt(localStorage.getItem(key), 10) + 1) || 0) % photos.length; } catch (e) {}
+    var cur = '', list = [], idx = 0, front = 0, nowWx = 'clear', nowPeriod = 'day';
     function show(i) {
-      var p = photos[i], img = new Image();
+      var p = list[i], key = cur, img = new Image();
       img.onload = function () {
+        if (key !== cur) return;                       // the situation changed while this photo was loading
         var next = layers[1 - front];
         next.style.backgroundImage = 'url("wallpapers/' + p[0] + '")';
         next.classList.add('on'); layers[front].classList.remove('on'); front = 1 - front;
         cap.textContent = p[1];
-        try { localStorage.setItem(key, String(i)); } catch (e) {}
+        try { localStorage.setItem('cyt-wp-' + key, String(i)); } catch (e) {}
       };
       img.src = 'wallpapers/' + p[0];
     }
-    show(idx);
-    setInterval(function () { idx = (idx + 1) % photos.length; show(idx); }, 5 * 60 * 1000);
-
-    // When day turns to evening (or back), the look and the set of photos change together.
-    function dayNight() {
-      var n = isNight();
-      document.body.classList.toggle('night', n);
-      if (n !== night) {
-        night = n; photos = night ? nightPhotos : dayPhotos; key = night ? 'cyt-wp-night' : 'cyt-wp-day';
-        try { idx = ((parseInt(localStorage.getItem(key), 10) + 1) || 0) % photos.length; } catch (e) { idx = 0; }
+    function apply() {
+      nowWx = forcedWx || wxState.wx; nowPeriod = forcedPeriod || periodNow();
+      var b = document.body.classList;
+      ['morning', 'day', 'evening', 'night'].forEach(function (p) { b.toggle('p-' + p, p === nowPeriod); });
+      ['clear', 'cloudy', 'fog', 'rain', 'snow', 'storm'].forEach(function (w) { b.toggle('wx-' + w, w === nowWx); });
+      b.toggle('fx', nowWx === 'rain' || nowWx === 'snow' || nowWx === 'storm');
+      var key = nowWx + '-' + nowPeriod;
+      if (key !== cur) {
+        cur = key; list = pick(nowWx, nowPeriod);
+        try { idx = ((parseInt(localStorage.getItem('cyt-wp-' + key), 10) + 1) || 0) % list.length; } catch (e) { idx = 0; }
         show(idx);
       }
     }
-    dayNight();
-    setInterval(dayNight, 60 * 1000);
+    apply();
+    fetchWeather();
+    setInterval(apply, 60 * 1000);
+    setInterval(fetchWeather, 30 * 60 * 1000);
+    setInterval(function () { idx = (idx + 1) % list.length; show(idx); }, 5 * 60 * 1000);
 
-    // ?diag=1 prints what this browser does, for finding out why the evening look does not show.
+    // ?diag=1 prints what the page decided and what this browser can do.
     if (/[?&]diag=1/.test(location.search)) {
       var box = document.createElement('div');
       box.style.cssText = 'position:absolute;left:24px;bottom:24px;z-index:99;padding:14px 20px;background:rgba(0,0,0,.85);color:#fff;font:26px/1.4 monospace;max-width:1500px;';
       document.body.appendChild(box);
       var report = function () {
         try {
-          var n = document.getElementById('night'), r = document.getElementById('rain'), cs = getComputedStyle(n), rc = getComputedStyle(r);
-          var sup = function (a, b) { try { return window.CSS && CSS.supports ? CSS.supports(a, b) : 'n/a'; } catch (e) { return 'err'; } };
-          box.textContent = 'v7  hour=' + new Date().getHours() + '  night=' + document.body.classList.contains('night') +
-            '\noverlay=' + n.offsetWidth + 'x' + n.offsetHeight + ' op=' + cs.opacity + ' bg=' + (cs.backgroundImage || '').slice(0, 24) +
-            '\nrain=' + r.offsetWidth + 'x' + r.offsetHeight + ' op=' + rc.opacity +
-            '\ninset=' + sup('inset', '0') + ' backdrop=' + sup('backdrop-filter', 'blur(1px)') + ' grad=' + sup('background', 'linear-gradient(0deg,red,blue)') +
-            '\n' + ((navigator.userAgent.match(/(Chrom[a-z]+|Odin|Safari|VIDAA)[\/\w. ]*/g) || []).join(' ').slice(0, 120));
+          box.textContent = 'v10  place=' + (haveLoc ? 'yes' : 'NO') + '  code=' + wxState.code + '  weather=' + nowWx + '  period=' + nowPeriod + '  err=' + (wxErr || 'none') +
+            '\nsunrise=' + Math.floor(wxState.sr / 60) + ':' + ('0' + wxState.sr % 60).slice(-2) + ' sunset=' + Math.floor(wxState.ss / 60) + ':' + ('0' + wxState.ss % 60).slice(-2) +
+            ' hour=' + new Date().getHours() + '  photos=' + list.length + '  fx=' + document.body.classList.contains('fx');
         } catch (e) { box.textContent = 'diag error: ' + e.message; }
       };
       report(); setInterval(report, 2000);
