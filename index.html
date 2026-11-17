@@ -129,11 +129,11 @@
 
   /* The single glass highlight: sheen, a bright top specular, a crisp rim and a faint glow. */
   #glass { position: absolute; left: 0; top: 0; border-radius: 36px; pointer-events: none; opacity: 0; transition: opacity .2s ease;
-           background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.07));
-           border: 3px solid rgba(255,255,255,.8); box-sizing: border-box;
-           box-shadow: 0 0 14px 2px rgba(255,255,255,.19); will-change: transform; }
+           background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+           border: 2px solid rgba(255,255,255,.5); box-sizing: border-box;
+           box-shadow: 0 0 8px 1px rgba(255,255,255,.08); will-change: transform; }
   #glass::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 45%; border-radius: 33px 33px 0 0;
-                   background: linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)); }
+                   background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)); }
   #glass.on { opacity: 1; }
 
   /* Without the helper the pills cannot do anything, so they are not shown. */
