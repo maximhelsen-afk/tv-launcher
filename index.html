@@ -20,14 +20,14 @@
   /* Wallpaper (ambient-glass theme): photos that take turns, a soft shade for the text, the photo's name under the buttons. */
   .wp { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background-size: cover; background-position: center; opacity: 0; transition: opacity 2s ease; }
   .wp.on { opacity: 1; }
-  #wpShade { position: absolute; inset: 0; pointer-events: none;
+  #wpShade { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none;
              background: linear-gradient(180deg, rgba(0,0,0,.38) 0, rgba(0,0,0,.08) 28%, rgba(0,0,0,.1) 52%, rgba(0,0,0,.5) 100%); }
   #caption { position: absolute; right: 112px; top: 184px; max-width: 760px; text-align: right; font-size: 22px; letter-spacing: .04em;
              color: rgba(255,255,255,.78); text-shadow: 0 2px 8px rgba(0,0,0,.75); z-index: 3; transition: opacity .8s ease; }
   /* Evening: the photos go dark and cool, with a wet sheen low down and rain falling in two layers. Day is the plain photos. */
-  #night { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 4s ease;
+  #night { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0; transition: opacity 4s ease;
            background: linear-gradient(0deg, rgba(120,150,210,.2) 0, rgba(120,150,210,0) 38%), rgba(6,12,28,.66); }
-  #rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 4s ease; }
+  #rain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 4s ease; }
   #rain i { position: absolute; left: 0; width: 1920px; display: block; will-change: transform; }
   #rain .r1 { top: -160px; height: 1240px; opacity: .8;
     background: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg stroke='rgba(205,220,255,0.5)' stroke-width='1.4' stroke-linecap='round'%3E%3Cline x1='20' y1='10' x2='14' y2='34'/%3E%3Cline x1='90' y1='60' x2='84' y2='86'/%3E%3Cline x1='140' y1='20' x2='134' y2='44'/%3E%3Cline x1='50' y1='100' x2='44' y2='126'/%3E%3Cline x1='120' y1='120' x2='114' y2='146'/%3E%3C/g%3E%3C/svg%3E");
