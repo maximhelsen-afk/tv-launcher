@@ -1,18 +1,6 @@
 {
     "apps":  [
                  {
-                     "appId":  "tatami-web",
-                     "name":  "Tatami",
-                     "icon":  "tatami/icon.png",
-                     "url":  "https://maximhelsen-afk.github.io/tv-launcher/tatami/",
-                     "bg":  "rgb(12,11,7)",
-                     "glow":  [
-                                  214,
-                                  190,
-                                  110
-                              ]
-                 },
-                 {
                      "appId":  "284",
                      "name":  "TV Channels▶",
                      "icon":  "https://img.vidaahub.com/vidaa/2025/12/202512030945137285.jpg",
