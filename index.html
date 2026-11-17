@@ -935,6 +935,25 @@
     }
     dayNight();
     setInterval(dayNight, 60 * 1000);
+
+    // ?diag=1 prints what this browser does, for finding out why the evening look does not show.
+    if (/[?&]diag=1/.test(location.search)) {
+      var box = document.createElement('div');
+      box.style.cssText = 'position:absolute;left:24px;bottom:24px;z-index:99;padding:14px 20px;background:rgba(0,0,0,.85);color:#fff;font:26px/1.4 monospace;max-width:1500px;';
+      document.body.appendChild(box);
+      var report = function () {
+        try {
+          var n = document.getElementById('night'), r = document.getElementById('rain'), cs = getComputedStyle(n), rc = getComputedStyle(r);
+          var sup = function (a, b) { try { return window.CSS && CSS.supports ? CSS.supports(a, b) : 'n/a'; } catch (e) { return 'err'; } };
+          box.textContent = 'v7  hour=' + new Date().getHours() + '  night=' + document.body.classList.contains('night') +
+            '\noverlay=' + n.offsetWidth + 'x' + n.offsetHeight + ' op=' + cs.opacity + ' bg=' + (cs.backgroundImage || '').slice(0, 24) +
+            '\nrain=' + r.offsetWidth + 'x' + r.offsetHeight + ' op=' + rc.opacity +
+            '\ninset=' + sup('inset', '0') + ' backdrop=' + sup('backdrop-filter', 'blur(1px)') + ' grad=' + sup('background', 'linear-gradient(0deg,red,blue)') +
+            '\n' + ((navigator.userAgent.match(/(Chrom[a-z]+|Odin|Safari|VIDAA)[\/\w. ]*/g) || []).join(' ').slice(0, 120));
+        } catch (e) { box.textContent = 'diag error: ' + e.message; }
+      };
+      report(); setInterval(report, 2000);
+    }
   } catch (e) {}
 })();
 </script>
