@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>Tatami</title>
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #0a0907; }
+  canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
+  #hint { position: absolute; left: 0; right: 0; bottom: 48px; text-align: center; font: 300 26px/1 sans-serif; letter-spacing: .18em;
+          text-transform: uppercase; color: rgba(255,255,255,.55); transition: opacity 1.5s ease; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1280" height="720"></canvas>
+<div id="hint">Back to return</div>
+<script>
+(function () {
+  'use strict';
+  var W = 1280, H = 720;
+  var cv = document.getElementById('c'), ctx = cv.getContext('2d');
+
+  // Small seeded random generator, so every start draws the same rooms.
+  function rng(seed) { var s = seed >>> 0; return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+  function mix(a, b, t) { return a + (b - a) * t; }
+  function col(r, g, b, a) { return 'rgba(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ',' + (a === undefined ? 1 : a) + ')'; }
+
+  // ---------- look 1: Nagaya, rows of rooms behind thin walls, moving slowly in opposite directions ----------
+  var ROW_H = 132, ROW_GAP = 10;
+  var rows = [];
+  (function () {
+    var r = rng(7), n = Math.ceil(H / (ROW_H + ROW_GAP)) + 2;
+    for (var i = 0; i < n; i++) {
+      var rooms = [], x = 0, total = 0;
+      while (total < W + 400) {
+        var w = 150 + Math.floor(r() * 110);
+        rooms.push({ x: x, w: w, tone: r(), lamp: r() < .28, lampX: .25 + r() * .5, table: r() < .35, door: r() < .6, phase: r() * 6.28, mats: r() < .7 });
+        x += w; total = x;
+      }
+      rows.push({ rooms: rooms, len: total, speed: (i % 2 ? -1 : 1) * (7 + r() * 9), off: r() * 400 });
+    }
+  })();
+
+  function drawRoomNagaya(x, y, w, h, rm, t) {
+    var tone = rm.tone;
+    ctx.fillStyle = col(mix(150, 196, tone), mix(118, 152, tone), mix(70, 98, tone));
+    ctx.fillRect(x, y, w, h);
+    if (rm.mats) {                                   // faint mat lines
+      ctx.strokeStyle = col(60, 42, 20, .35); ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      for (var mx = x + 44; mx < x + w - 10; mx += 44) { ctx.moveTo(mx, y); ctx.lineTo(mx, y + h); }
+      ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2);
+      ctx.stroke();
+    }
+    if (rm.table) {
+      ctx.fillStyle = col(52, 34, 20, .85);
+      ctx.fillRect(x + w * .38, y + h * .56, w * .24, h * .16);
+    }
+    if (rm.lamp) {
+      var lx = x + w * rm.lampX, ly = y + h * .3, pulse = .85 + .15 * Math.sin(t * .6 + rm.phase);
+      var g = ctx.createRadialGradient(lx, ly, 2, lx, ly, 85);
+      g.addColorStop(0, col(255, 214, 140, .55 * pulse)); g.addColorStop(1, col(255, 214, 140, 0));
+      ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+    }
+    // walls: dark frame; a door gap that slides slowly open and shut
+    ctx.fillStyle = col(24, 18, 12);
+    ctx.fillRect(x, y, w, 6); ctx.fillRect(x, y + h - 6, w, 6); ctx.fillRect(x, y, 7, h);
+    if (rm.door) {
+      var open = (Math.sin(t * .25 + rm.phase) + 1) / 2, dh = 18 + 44 * open;
+      ctx.fillStyle = col(236, 208, 150, .9);
+      ctx.fillRect(x, y + h - 6 - dh - 8, 7, dh);
+    }
+  }
+
+  function drawNagaya(t) {
+    ctx.fillStyle = '#0d0b08'; ctx.fillRect(0, 0, W, H);
+    var drift = Math.sin(t * .02) * 14;              // the whole block sways a little
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i], y = i * (ROW_H + ROW_GAP) - 20 + drift;
+      var off = ((row.off + row.speed * t) % row.len + row.len) % row.len;
+      for (var copy = -1; copy <= 1; copy++) {
+        for (var k = 0; k < row.rooms.length; k++) {
+          var rm = row.rooms[k], x = rm.x - off + copy * row.len;
+          if (x > W || x + rm.w < 0) continue;
+          drawRoomNagaya(x, y, rm.w, ROW_H, rm, t);
+        }
+      }
+    }
+  }
+
+  // ---------- look 2: Yojohan, four and a half mats, rooms repeating over the whole screen ----------
+  var U = 56, GAP = 14, CELL = U * 3 + GAP * 2;
+  var cells = [];
+  (function () {
+    var r = rng(21);
+    for (var i = 0; i < 64; i++) cells.push({ tone: r(), lamp: r() < .2, table: r() < .3, flip: r() < .5, phase: r() * 6.28 });
+  })();
+  var MATS = [[0, 0, 2, 1], [2, 0, 1, 2], [1, 2, 2, 1], [0, 1, 1, 2], [1, 1, 1, 1]];   // the pinwheel of four mats round a half mat
+
+  function drawYojohan(t) {
+    ctx.fillStyle = '#0c0b07'; ctx.fillRect(0, 0, W, H);
+    var ox = (t * 6) % (CELL * 8), oy = (t * 3.5) % (CELL * 8);
+    var cols = Math.ceil(W / CELL) + 2, rowsN = Math.ceil(H / CELL) + 2;
+    for (var cy = -1; cy < rowsN; cy++) {
+      for (var cx = -1; cx < cols; cx++) {
+        var gx = Math.floor((cx + Math.floor(ox / CELL)) % 8 + 8) % 8, gy = Math.floor((cy + Math.floor(oy / CELL)) % 8 + 8) % 8;
+        var c = cells[gy * 8 + gx];
+        var x = cx * CELL - (ox % CELL), y = cy * CELL - (oy % CELL);
+        for (var m = 0; m < MATS.length; m++) {
+          var mt = MATS[m], mx = c.flip ? 3 - mt[0] - mt[2] : mt[0];
+          var px = x + mx * U + GAP, py = y + mt[1] * U + GAP, pw = mt[2] * U, ph = mt[3] * U;
+          var shade = 0.86 + 0.14 * c.tone + (m === 4 ? -0.06 : 0);
+          ctx.fillStyle = col(112 * shade, 118 * shade, 52 * shade);
+          ctx.fillRect(px, py, pw, ph);
+          ctx.strokeStyle = col(30, 32, 14, .9); ctx.lineWidth = 3;     // the cloth border of each mat
+          ctx.strokeRect(px + 2, py + 2, pw - 4, ph - 4);
+          ctx.strokeStyle = col(160, 166, 90, .18); ctx.lineWidth = 1;  // the weave
+          ctx.beginPath();
+          for (var wy = py + 9; wy < py + ph - 4; wy += 9) { ctx.moveTo(px + 5, wy); ctx.lineTo(px + pw - 5, wy); }
+          ctx.stroke();
+        }
+        if (c.table) { ctx.fillStyle = col(40, 27, 16, .9); ctx.fillRect(x + GAP + U * 1.15, y + GAP + U * 1.2, U * .7, U * .6); }
+        if (c.lamp) {
+          var lx = x + GAP + U * 1.5, ly = y + GAP + U * 1.5, p = .8 + .2 * Math.sin(t * .5 + c.phase);
+          var g = ctx.createRadialGradient(lx, ly, 2, lx, ly, 110);
+          g.addColorStop(0, col(255, 224, 150, .5 * p)); g.addColorStop(1, col(255, 224, 150, 0));
+          ctx.fillStyle = g; ctx.fillRect(x - 20, y - 20, CELL + 40, CELL + 40);
+        }
+      }
+    }
+  }
+
+  // ---------- the show: the two looks take turns, one dissolving into the next ----------
+  var HOLD = 75, FADE = 6, looks = [drawNagaya, drawYojohan];
+  var start = Date.now(), last = 0, vig = null;
+  function vignette() {
+    if (vig) return vig;
+    vig = ctx.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * .95);
+    vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,.65)');
+    return vig;
+  }
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (now - last < 33) return;                    // about 30 frames a second is plenty for something this slow
+    last = now;
+    var t = (Date.now() - start) / 1000, period = HOLD + FADE, n = looks.length;
+    var idx = Math.floor(t / period) % n, local = t % period;
+    ctx.globalAlpha = 1;
+    looks[idx](t);
+    if (local > HOLD) {                              // dissolve into the next look
+      ctx.globalAlpha = (local - HOLD) / FADE;
+      looks[(idx + 1) % n](t);
+      ctx.globalAlpha = 1;
+    }
+    ctx.fillStyle = vignette(); ctx.fillRect(0, 0, W, H);
+  }
+  requestAnimationFrame(frame);
+
+  // Hide the hint after a few seconds; Back (or Escape) returns to the launcher.
+  setTimeout(function () { document.getElementById('hint').style.opacity = 0; }, 6000);
+  function back() { if (history.length > 1) history.back(); else location.href = '../'; }
+  document.addEventListener('keydown', function (e) {
+    var k = e.keyCode;
+    if (k === 8 || k === 461 || k === 27 || k === 10009) { e.preventDefault(); back(); }
+    else { var h = document.getElementById('hint'); h.style.transition = 'none'; h.style.opacity = 1; setTimeout(function () { h.style.transition = 'opacity 1.5s ease'; h.style.opacity = 0; }, 3000); }
+  });
+})();
+</script>
+</body>
+</html>
