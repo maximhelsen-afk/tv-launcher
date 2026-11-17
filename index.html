@@ -26,7 +26,7 @@
              color: rgba(255,255,255,.78); text-shadow: 0 2px 8px rgba(0,0,0,.75); z-index: 3; transition: opacity .8s ease; }
   /* Evening: the photos go dark and cool, with a wet sheen low down and rain falling in two layers. Day is the plain photos. */
   #night { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; opacity: 0; transition: opacity 4s ease;
-           background: linear-gradient(0deg, rgba(120,150,210,.2) 0, rgba(120,150,210,0) 38%), rgba(6,12,28,.66); }
+           background: linear-gradient(0deg, rgba(120,150,210,.2) 0, rgba(120,150,210,0) 38%), rgba(6,12,28,.3); }
   #rain { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 4s ease; }
   #rain i { position: absolute; left: 0; width: 1920px; display: block; will-change: transform; }
   #rain .r1 { top: -160px; height: 1240px; opacity: .8;
@@ -897,7 +897,18 @@
 // Wallpaper: the theme's eight photos, one every 5 minutes, in order; the next one is loaded before it fades in.
 (function () {
   try {
-    var photos = [
+    // Evening photos: Japan at night, from Unsplash (free licence); the photographers are named in the caption and in wallpapers/CREDITS.md.
+    var nightPhotos = [
+      ['j1-pagoda-dusk.jpg', 'Pagoda at dusk, Japan · Su San Lee'],
+      ['j2-shibuya-neon.jpg', 'Shibuya at night, Tokyo · Jezael Melgoza'],
+      ['j3-narrow-street.jpg', 'Narrow street at night, Japan · Marek Piwnicki'],
+      ['j4-fuji-night.jpg', 'Mount Fuji at night · Clay Banks'],
+      ['j5-street-pagoda.jpg', 'Old street with a pagoda at night · Tom Podmore'],
+      ['j6-tokyo-tower.jpg', 'Tokyo Tower at night · Marek Okon'],
+      ['j7-city-aerial.jpg', 'Tokyo at night from above · Takashi Miyazaki'],
+      ['j8-japanese-alley.jpg', 'Quiet alley at night, Japan · Andre Benz']
+    ];
+    var dayPhotos = [
       ['01-alps-switzerland.jpg', 'Swiss Alps, Switzerland'],
       ['02-atacama-chile.jpg', 'Atacama Desert, Chile'],
       ['03-blue-horizons.jpg', 'Blue Horizons & Emerald Shores'],
@@ -908,8 +919,13 @@
       ['08-shrine-pass-road.jpg', 'Shrine Pass, Colorado']
     ];
     var layers = [document.getElementById('wpA'), document.getElementById('wpB')], cap = document.getElementById('caption');
+    // Day and evening: the evening look (Japan at night, dark, rain) runs from NIGHT_FROM to NIGHT_TO o'clock. ?theme=night or ?theme=day forces one, for trying it out.
+    var NIGHT_FROM = 17, NIGHT_TO = 7;
+    var forced = /[?&]theme=(day|night)/.exec(location.search);
+    function isNight() { if (forced) return forced[1] === 'night'; var h = new Date().getHours(); return h >= NIGHT_FROM || h < NIGHT_TO; }
+    var night = isNight(), photos = night ? nightPhotos : dayPhotos, key = night ? 'cyt-wp-night' : 'cyt-wp-day';
     var idx = 0, front = 0;
-    try { idx = ((parseInt(localStorage.getItem('cyt-wp'), 10) + 1) || 0) % photos.length; } catch (e) {}
+    try { idx = ((parseInt(localStorage.getItem(key), 10) + 1) || 0) % photos.length; } catch (e) {}
     function show(i) {
       var p = photos[i], img = new Image();
       img.onload = function () {
@@ -917,21 +933,22 @@
         next.style.backgroundImage = 'url("wallpapers/' + p[0] + '")';
         next.classList.add('on'); layers[front].classList.remove('on'); front = 1 - front;
         cap.textContent = p[1];
-        try { localStorage.setItem('cyt-wp', String(i)); } catch (e) {}
+        try { localStorage.setItem(key, String(i)); } catch (e) {}
       };
       img.src = 'wallpapers/' + p[0];
     }
     show(idx);
     setInterval(function () { idx = (idx + 1) % photos.length; show(idx); }, 5 * 60 * 1000);
 
-    // Day and evening: the evening look (dark, rain) runs from NIGHT_FROM to NIGHT_TO o'clock. ?theme=night or ?theme=day forces one, for trying it out.
-    var NIGHT_FROM = 17, NIGHT_TO = 7;
-    var forced = /[?&]theme=(day|night)/.exec(location.search);
+    // When day turns to evening (or back), the look and the set of photos change together.
     function dayNight() {
-      var night;
-      if (forced) night = forced[1] === 'night';
-      else { var h = new Date().getHours(); night = h >= NIGHT_FROM || h < NIGHT_TO; }
-      document.body.classList.toggle('night', night);
+      var n = isNight();
+      document.body.classList.toggle('night', n);
+      if (n !== night) {
+        night = n; photos = night ? nightPhotos : dayPhotos; key = night ? 'cyt-wp-night' : 'cyt-wp-day';
+        try { idx = ((parseInt(localStorage.getItem(key), 10) + 1) || 0) % photos.length; } catch (e) { idx = 0; }
+        show(idx);
+      }
     }
     dayNight();
     setInterval(dayNight, 60 * 1000);

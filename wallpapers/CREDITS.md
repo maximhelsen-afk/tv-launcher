@@ -45,3 +45,16 @@ Landscape wallpaper photographs sourced from Unsplash / Wikimedia Commons under 
 All eight pictures are released under Creative Commons CC0 1.0 Universal (public domain) / Unsplash License, so the repository can redistribute them alongside its MIT licence:
 https://creativecommons.org/publicdomain/zero/1.0/
 https://unsplash.com/license
+
+## Evening photos (Japan at night)
+
+Photos from Unsplash (https://unsplash.com/s/photos/japan-night), used under the Unsplash License. Resized to 1920 x 1080.
+
+- j1-pagoda-dusk.jpg: Su San Lee, https://unsplash.com/photos/pagoda-surrounded-by-trees-E_eWwM29wfU
+- j2-shibuya-neon.jpg: Jezael Melgoza, https://unsplash.com/photos/cars-in-neon-shibuya-intersection-alY6_OpdwRQ
+- j3-narrow-street.jpg: Marek Piwnicki, https://unsplash.com/photos/a-person-walks-down-a-narrow-street-at-night-Oag63lK-sGk
+- j4-fuji-night.jpg: Clay Banks, https://unsplash.com/photos/mount-fuji-at-night-in-japan-u27Rrbs9Dwc
+- j5-street-pagoda.jpg: Tom Podmore, https://unsplash.com/photos/traditional-japanese-street-at-night-with-a-pagoda-PNcxIa2HHBk
+- j6-tokyo-tower.jpg: Marek Okon, https://unsplash.com/photos/tokyo-tower-at-night-in-tokyo-3-esk8zPwPY
+- j7-city-aerial.jpg: Takashi Miyazaki, https://unsplash.com/photos/aerial-view-of-city-buildings-during-night-time-64ajtpEzlYc
+- j8-japanese-alley.jpg: Andre Benz, https://unsplash.com/photos/narrow-japanese-street-at-night-qi2hmCwlhcE
