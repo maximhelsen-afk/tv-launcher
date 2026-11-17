@@ -1074,12 +1074,45 @@
         try {
           box.textContent = 'v10  place=' + (haveLoc ? 'yes' : 'NO') + '  code=' + wxState.code + '  weather=' + nowWx + '  period=' + nowPeriod + '  err=' + (wxErr || 'none') +
             '\nsunrise=' + Math.floor(wxState.sr / 60) + ':' + ('0' + wxState.sr % 60).slice(-2) + ' sunset=' + Math.floor(wxState.ss / 60) + ':' + ('0' + wxState.ss % 60).slice(-2) +
-            ' hour=' + new Date().getHours() + '  photos=' + list.length + '  fx=' + document.body.classList.contains('fx');
+            ' hour=' + new Date().getHours() + '  photos=' + list.length + '  fx=' + document.body.classList.contains('fx') +
+            '\nwindow=' + window.innerWidth + 'x' + window.innerHeight + ' dpr=' + window.devicePixelRatio + ' visual=' + (window.visualViewport ? Math.round(window.visualViewport.width) + 'x' + Math.round(window.visualViewport.height) + '@' + window.visualViewport.scale : 'n/a') +
+            ' scale=' + (window.__cytFit ? window.__cytFit() : '?');
         } catch (e) { box.textContent = 'diag error: ' + e.message; }
       };
       report(); setInterval(report, 2000);
     }
   } catch (e) {}
+})();
+</script>
+<script>
+// The page is drawn for exactly 1920 x 1080. If the TV browser shows it in a different window or zoom (this happens when it comes back from an app),
+// scale the whole page to fit the screen again instead of showing only a corner of it.
+(function () {
+  var last = 1;
+  function fit() {
+    try {
+      var vv = window.visualViewport;
+      var w = (vv && vv.width) || window.innerWidth || document.documentElement.clientWidth;
+      var h = (vv && vv.height) || window.innerHeight || document.documentElement.clientHeight;
+      if (!w || !h) return;
+      var s = Math.min(w / 1920, h / 1080);
+      if (Math.abs(s - 1) < 0.015) s = 1;
+      if (s === last) return;
+      last = s;
+      var b = document.body.style;
+      b.transformOrigin = '0 0';
+      b.transform = s === 1 ? '' : 'scale(' + s + ')';
+      window.scrollTo(0, 0);
+    } catch (e) {}
+  }
+  window.__cytFit = function () { return last; };
+  window.addEventListener('resize', fit);
+  window.addEventListener('pageshow', fit);
+  window.addEventListener('orientationchange', fit);
+  document.addEventListener('visibilitychange', fit);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
+  fit();
+  setInterval(fit, 2000);
 })();
 </script>
 </body>
