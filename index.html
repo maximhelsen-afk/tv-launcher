@@ -17,6 +17,15 @@
   html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #05070C; }
   body { font-family: Outfit, OutfitLocal, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
 
+  /* Wallpaper (ambient-glass theme): photos that take turns, a soft shade for the text, the photo's name under the buttons. */
+  .wp { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background-size: cover; background-position: center; opacity: 0; transition: opacity 2s ease; }
+  .wp.on { opacity: 1; }
+  #wpShade { position: absolute; inset: 0; pointer-events: none;
+             background: linear-gradient(180deg, rgba(0,0,0,.38) 0, rgba(0,0,0,.08) 28%, rgba(0,0,0,.1) 52%, rgba(0,0,0,.5) 100%); }
+  #caption { position: absolute; right: 112px; top: 184px; max-width: 760px; text-align: right; font-size: 22px; letter-spacing: .04em;
+             color: rgba(255,255,255,.78); text-shadow: 0 2px 8px rgba(0,0,0,.75); z-index: 3; transition: opacity .8s ease; }
+  /* This theme has no coloured glow behind the focused app. */
+  .ambient { display: none; }
   /* Ambient glow in the focused app's colour: two layers so one colour can fade into the next. */
   .ambient { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; pointer-events: none; }
   .ambient.on { opacity: 1; }
@@ -151,6 +160,7 @@
 </style>
 </head>
 <body>
+<div class="wp" id="wpA"></div><div class="wp" id="wpB"></div><div id="wpShade"></div><div id="caption"></div>
 <div class="ambient" id="ambientA"></div>
 <div class="ambient" id="ambientB"></div>
 
@@ -865,6 +875,39 @@
   }
   if (/[?&]static=1/.test(location.search)) startStatic();
   else load('/api/state').then(start, startStatic);
+})();
+</script>
+<script>
+// Wallpaper: the theme's eight photos, one every 5 minutes, in order; the next one is loaded before it fades in.
+(function () {
+  try {
+    var photos = [
+      ['01-alps-switzerland.jpg', 'Swiss Alps, Switzerland'],
+      ['02-atacama-chile.jpg', 'Atacama Desert, Chile'],
+      ['03-blue-horizons.jpg', 'Blue Horizons & Emerald Shores'],
+      ['04-emerald-lake.jpg', 'Emerald Lake & Mountains'],
+      ['05-occitanie-france.jpg', 'Taüll, Catalan Pyrenees, Spain'],
+      ['06-alpine-waterscape.jpg', 'Alpine Waterscape & Mountain Peaks'],
+      ['07-mount-baker.jpg', 'Mount Baker, Washington'],
+      ['08-shrine-pass-road.jpg', 'Shrine Pass, Colorado']
+    ];
+    var layers = [document.getElementById('wpA'), document.getElementById('wpB')], cap = document.getElementById('caption');
+    var idx = 0, front = 0;
+    try { idx = ((parseInt(localStorage.getItem('cyt-wp'), 10) + 1) || 0) % photos.length; } catch (e) {}
+    function show(i) {
+      var p = photos[i], img = new Image();
+      img.onload = function () {
+        var next = layers[1 - front];
+        next.style.backgroundImage = 'url("wallpapers/' + p[0] + '")';
+        next.classList.add('on'); layers[front].classList.remove('on'); front = 1 - front;
+        cap.textContent = p[1];
+        try { localStorage.setItem('cyt-wp', String(i)); } catch (e) {}
+      };
+      img.src = 'wallpapers/' + p[0];
+    }
+    show(idx);
+    setInterval(function () { idx = (idx + 1) % photos.length; show(idx); }, 5 * 60 * 1000);
+  } catch (e) {}
 })();
 </script>
 </body>
