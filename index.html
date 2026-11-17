@@ -890,7 +890,8 @@
       dockSize = localOrder() ? COLS : apps.filter(function (a) { return dock.indexOf(a.appId) >= 0; }).length;
     }
     state.apps = apps;
-    state.dockSize = Math.min(dockSize || 4, COLS, state.apps.length);
+    // The dock always fills a whole row (5 tiles), whatever the dock list holds (apps that are not on this TV would leave it short).
+    state.dockSize = Math.min(COLS, state.apps.length);
     state.clock24 = !!s.clock_24h; state.greetingName = s.greeting_name || '';
     state.sources = s.sources || [];
     state.browserCfg = s.browser || {};
@@ -993,7 +994,10 @@
     function param(n) { var m = new RegExp('[?&]' + n + '=([^&]*)').exec(location.search); return m ? decodeURIComponent(m[1]) : ''; }
     var forcedWx = param('wx'), forcedPeriod = param('period'), theme = param('theme');
     if (!forcedPeriod && (theme === 'night' || theme === 'day')) forcedPeriod = theme;
-    var lat = parseFloat(param('lat')), lon = parseFloat(param('lon')), haveLoc = isFinite(lat) && isFinite(lon), wxErr = '';
+    var lat = parseFloat(param('lat')), lon = parseFloat(param('lon')), wxErr = '';
+    // The copy the PC helper serves to the TV carries its place in window.CYT_PLACE; the published copy has none, so the place stays out of it.
+    if (!(isFinite(lat) && isFinite(lon)) && window.CYT_PLACE) { lat = window.CYT_PLACE[0]; lon = window.CYT_PLACE[1]; }
+    var haveLoc = isFinite(lat) && isFinite(lon);
 
     // Weather state: the code, sunrise and sunset (minutes since midnight). Kept for a while in case the weather service cannot be reached.
     var wxState = { wx: 'clear', code: -1, sr: 7 * 60, ss: 17 * 60 + 30 };
