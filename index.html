@@ -17,9 +17,6 @@
   html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #05070C; }
   body { font-family: Outfit, OutfitLocal, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
 
-  /* Moving wallpaper (Tatami-style rooms) behind everything, dimmed so the text and tiles stay readable. */
-  #bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; }
-  #bgdim { position: absolute; inset: 0; pointer-events: none; background: rgba(5,7,12,.5); }
   /* Ambient glow in the focused app's colour: two layers so one colour can fade into the next. */
   .ambient { position: absolute; inset: 0; opacity: 0; transition: opacity .6s ease; pointer-events: none; }
   .ambient.on { opacity: 1; }
@@ -154,7 +151,6 @@
 </style>
 </head>
 <body>
-<canvas id="bg" width="1280" height="720"></canvas><div id="bgdim"></div>
 <div class="ambient" id="ambientA"></div>
 <div class="ambient" id="ambientB"></div>
 
@@ -869,112 +865,6 @@
   }
   if (/[?&]static=1/.test(location.search)) startStatic();
   else load('/api/state').then(start, startStatic);
-})();
-</script>
-<script>
-// Wallpaper: slowly moving rooms. Two looks take turns, one dissolving into the next. Drawn small (1280 x 720, 20 frames a second) to stay light on the TV.
-(function () {
-  'use strict';
-  var W = 1280, H = 720, cv = document.getElementById('bg');
-  if (!cv || !cv.getContext) return;
-  var ctx = cv.getContext('2d');
-  function rng(seed) { var s = seed >>> 0; return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
-  function mix(a, b, t) { return a + (b - a) * t; }
-  function col(r, g, b, a) { return 'rgba(' + (r | 0) + ',' + (g | 0) + ',' + (b | 0) + ',' + (a === undefined ? 1 : a) + ')'; }
-
-  // Look 1: rows of rooms behind thin walls, moving in opposite directions, doors sliding slowly.
-  var ROW_H = 132, ROW_GAP = 10, rows = [];
-  (function () {
-    var r = rng(7), n = Math.ceil(H / (ROW_H + ROW_GAP)) + 2;
-    for (var i = 0; i < n; i++) {
-      var rooms = [], x = 0;
-      while (x < W + 400) {
-        var w = 150 + Math.floor(r() * 110);
-        rooms.push({ x: x, w: w, tone: r(), lamp: r() < .28, lampX: .25 + r() * .5, table: r() < .35, door: r() < .6, phase: r() * 6.28, mats: r() < .7 });
-        x += w;
-      }
-      rows.push({ rooms: rooms, len: x, speed: (i % 2 ? -1 : 1) * (7 + r() * 9), off: r() * 400 });
-    }
-  })();
-  function roomA(x, y, w, h, rm, t) {
-    ctx.fillStyle = col(mix(150, 196, rm.tone), mix(118, 152, rm.tone), mix(70, 98, rm.tone));
-    ctx.fillRect(x, y, w, h);
-    if (rm.mats) {
-      ctx.strokeStyle = col(60, 42, 20, .35); ctx.lineWidth = 1.5; ctx.beginPath();
-      for (var mx = x + 44; mx < x + w - 10; mx += 44) { ctx.moveTo(mx, y); ctx.lineTo(mx, y + h); }
-      ctx.moveTo(x, y + h / 2); ctx.lineTo(x + w, y + h / 2); ctx.stroke();
-    }
-    if (rm.table) { ctx.fillStyle = col(52, 34, 20, .85); ctx.fillRect(x + w * .38, y + h * .56, w * .24, h * .16); }
-    if (rm.lamp) {
-      var lx = x + w * rm.lampX, ly = y + h * .3, p = .85 + .15 * Math.sin(t * .6 + rm.phase);
-      var g = ctx.createRadialGradient(lx, ly, 2, lx, ly, 85);
-      g.addColorStop(0, col(255, 214, 140, .55 * p)); g.addColorStop(1, col(255, 214, 140, 0));
-      ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
-    }
-    ctx.fillStyle = col(24, 18, 12);
-    ctx.fillRect(x, y, w, 6); ctx.fillRect(x, y + h - 6, w, 6); ctx.fillRect(x, y, 7, h);
-    if (rm.door) {
-      var open = (Math.sin(t * .25 + rm.phase) + 1) / 2, dh = 18 + 44 * open;
-      ctx.fillStyle = col(236, 208, 150, .9); ctx.fillRect(x, y + h - 6 - dh - 8, 7, dh);
-    }
-  }
-  function lookA(t) {
-    ctx.fillStyle = '#0d0b08'; ctx.fillRect(0, 0, W, H);
-    var drift = Math.sin(t * .02) * 14;
-    for (var i = 0; i < rows.length; i++) {
-      var row = rows[i], y = i * (ROW_H + ROW_GAP) - 20 + drift;
-      var off = ((row.off + row.speed * t) % row.len + row.len) % row.len;
-      for (var copy = -1; copy <= 1; copy++) for (var k = 0; k < row.rooms.length; k++) {
-        var rm = row.rooms[k], x = rm.x - off + copy * row.len;
-        if (x > W || x + rm.w < 0) continue;
-        roomA(x, y, rm.w, ROW_H, rm, t);
-      }
-    }
-  }
-
-  // Look 2: four and a half mats, rooms repeating over the whole screen, drifting diagonally.
-  var U = 56, GAP = 14, CELL = U * 3 + GAP * 2, cells = [];
-  (function () { var r = rng(21); for (var i = 0; i < 64; i++) cells.push({ tone: r(), lamp: r() < .2, table: r() < .3, flip: r() < .5, phase: r() * 6.28 }); })();
-  var MATS = [[0, 0, 2, 1], [2, 0, 1, 2], [1, 2, 2, 1], [0, 1, 1, 2], [1, 1, 1, 1]];
-  function lookB(t) {
-    ctx.fillStyle = '#0c0b07'; ctx.fillRect(0, 0, W, H);
-    var ox = (t * 6) % (CELL * 8), oy = (t * 3.5) % (CELL * 8);
-    var cols = Math.ceil(W / CELL) + 2, rowsN = Math.ceil(H / CELL) + 2;
-    for (var cy = -1; cy < rowsN; cy++) for (var cx = -1; cx < cols; cx++) {
-      var gx = ((cx + Math.floor(ox / CELL)) % 8 + 8) % 8, gy = ((cy + Math.floor(oy / CELL)) % 8 + 8) % 8;
-      var c = cells[gy * 8 + gx], x = cx * CELL - (ox % CELL), y = cy * CELL - (oy % CELL);
-      for (var m = 0; m < MATS.length; m++) {
-        var mt = MATS[m], mx = c.flip ? 3 - mt[0] - mt[2] : mt[0];
-        var px = x + mx * U + GAP, py = y + mt[1] * U + GAP, pw = mt[2] * U, ph = mt[3] * U;
-        var shade = .86 + .14 * c.tone + (m === 4 ? -.06 : 0);
-        ctx.fillStyle = col(112 * shade, 118 * shade, 52 * shade); ctx.fillRect(px, py, pw, ph);
-        ctx.strokeStyle = col(30, 32, 14, .9); ctx.lineWidth = 3; ctx.strokeRect(px + 2, py + 2, pw - 4, ph - 4);
-        ctx.strokeStyle = col(160, 166, 90, .18); ctx.lineWidth = 1; ctx.beginPath();
-        for (var wy = py + 9; wy < py + ph - 4; wy += 9) { ctx.moveTo(px + 5, wy); ctx.lineTo(px + pw - 5, wy); }
-        ctx.stroke();
-      }
-      if (c.table) { ctx.fillStyle = col(40, 27, 16, .9); ctx.fillRect(x + GAP + U * 1.15, y + GAP + U * 1.2, U * .7, U * .6); }
-      if (c.lamp) {
-        var lx = x + GAP + U * 1.5, ly = y + GAP + U * 1.5, p = .8 + .2 * Math.sin(t * .5 + c.phase);
-        var g = ctx.createRadialGradient(lx, ly, 2, lx, ly, 110);
-        g.addColorStop(0, col(255, 224, 150, .5 * p)); g.addColorStop(1, col(255, 224, 150, 0));
-        ctx.fillStyle = g; ctx.fillRect(x - 20, y - 20, CELL + 40, CELL + 40);
-      }
-    }
-  }
-
-  var HOLD = 90, FADE = 8, looks = [lookA, lookB], start = Date.now(), last = 0, vig = null;
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (now - last < 50) return;
-    last = now;
-    var t = (Date.now() - start) / 1000, period = HOLD + FADE, idx = Math.floor(t / period) % looks.length, local = t % period;
-    ctx.globalAlpha = 1; looks[idx](t);
-    if (local > HOLD) { ctx.globalAlpha = (local - HOLD) / FADE; looks[(idx + 1) % looks.length](t); ctx.globalAlpha = 1; }
-    if (!vig) { vig = ctx.createRadialGradient(W / 2, H / 2, H * .35, W / 2, H / 2, H * .95); vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,.6)'); }
-    ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
-  }
-  requestAnimationFrame(frame);
 })();
 </script>
 </body>
