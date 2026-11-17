@@ -24,6 +24,22 @@
              background: linear-gradient(180deg, rgba(0,0,0,.38) 0, rgba(0,0,0,.08) 28%, rgba(0,0,0,.1) 52%, rgba(0,0,0,.5) 100%); }
   #caption { position: absolute; right: 112px; top: 184px; max-width: 760px; text-align: right; font-size: 22px; letter-spacing: .04em;
              color: rgba(255,255,255,.78); text-shadow: 0 2px 8px rgba(0,0,0,.75); z-index: 3; transition: opacity .8s ease; }
+  /* Evening: the photos go dark and cool, with a wet sheen low down and rain falling in two layers. Day is the plain photos. */
+  #night { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 4s ease;
+           background: linear-gradient(0deg, rgba(120,150,210,.2) 0, rgba(120,150,210,0) 38%), rgba(6,12,28,.66); }
+  #rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity 4s ease; }
+  #rain i { position: absolute; left: 0; width: 1920px; display: block; will-change: transform; }
+  #rain .r1 { top: -160px; height: 1240px; opacity: .8;
+    background: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg stroke='rgba(205,220,255,0.5)' stroke-width='1.4' stroke-linecap='round'%3E%3Cline x1='20' y1='10' x2='14' y2='34'/%3E%3Cline x1='90' y1='60' x2='84' y2='86'/%3E%3Cline x1='140' y1='20' x2='134' y2='44'/%3E%3Cline x1='50' y1='100' x2='44' y2='126'/%3E%3Cline x1='120' y1='120' x2='114' y2='146'/%3E%3C/g%3E%3C/svg%3E");
+    animation: fall1 .5s linear infinite; }
+  #rain .r2 { top: -256px; height: 1336px; opacity: .55;
+    background: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cg stroke='rgba(205,220,255,0.45)' stroke-width='1' stroke-linecap='round'%3E%3Cline x1='30' y1='30' x2='25' y2='52'/%3E%3Cline x1='110' y1='90' x2='105' y2='112'/%3E%3Cline x1='200' y1='20' x2='195' y2='42'/%3E%3Cline x1='70' y1='170' x2='65' y2='192'/%3E%3Cline x1='160' y1='200' x2='155' y2='222'/%3E%3Cline x1='230' y1='140' x2='225' y2='162'/%3E%3C/g%3E%3C/svg%3E");
+    animation: fall2 .8s linear infinite; }
+  @keyframes fall1 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 160px, 0); } }
+  @keyframes fall2 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 256px, 0); } }
+  body.night #night, body.night #rain { opacity: 1; }
+  /* Blurring a moving picture every frame is heavy for a TV: in the evening the dock is simply tinted. */
+  body.night #band { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.04)), rgba(14,20,34,.72); }
   /* This theme has no coloured glow behind the focused app. */
   .ambient { display: none; }
   /* Ambient glow in the focused app's colour: two layers so one colour can fade into the next. */
@@ -160,7 +176,7 @@
 </style>
 </head>
 <body>
-<div class="wp" id="wpA"></div><div class="wp" id="wpB"></div><div id="wpShade"></div><div id="caption"></div>
+<div class="wp" id="wpA"></div><div class="wp" id="wpB"></div><div id="wpShade"></div><div id="night"></div><div id="rain"><i class="r1"></i><i class="r2"></i></div><div id="caption"></div>
 <div class="ambient" id="ambientA"></div>
 <div class="ambient" id="ambientB"></div>
 
@@ -907,6 +923,18 @@
     }
     show(idx);
     setInterval(function () { idx = (idx + 1) % photos.length; show(idx); }, 5 * 60 * 1000);
+
+    // Day and evening: the evening look (dark, rain) runs from NIGHT_FROM to NIGHT_TO o'clock. ?theme=night or ?theme=day forces one, for trying it out.
+    var NIGHT_FROM = 17, NIGHT_TO = 7;
+    var forced = /[?&]theme=(day|night)/.exec(location.search);
+    function dayNight() {
+      var night;
+      if (forced) night = forced[1] === 'night';
+      else { var h = new Date().getHours(); night = h >= NIGHT_FROM || h < NIGHT_TO; }
+      document.body.classList.toggle('night', night);
+    }
+    dayNight();
+    setInterval(dayNight, 60 * 1000);
   } catch (e) {}
 })();
 </script>
