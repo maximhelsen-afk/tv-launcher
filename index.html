@@ -11,10 +11,10 @@
   @font-face { font-family: OutfitLocal; src: url(fonts/outfit.ttf) format("truetype"); font-weight: 100 900; }
 
   :root {
-    --tile-w: 360px; --tile-h: 202px; --tile-r: 32px; --pitch: 423px;
+    --tile-w: 290px; --tile-h: 163px; --tile-r: 26px; --pitch: 335px;
     --band-pad: 28px; --dock-top: 698px;
   }
-  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #05070C; }
   body { font-family: Outfit, OutfitLocal, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
 
   /* Ambient glow in the focused app's colour: two layers so one colour can fade into the next. */
@@ -39,6 +39,9 @@
           transition: transform .2s ease, background-color .2s ease; }
   .pill svg { width: 40px; height: 40px; fill: currentColor; }
   .pill.round { width: 84px; padding: 0; justify-content: center; }
+  /* Icon-only round buttons (ambient-glass theme): the text is hidden, the icon stays. */
+  .pill { width: 84px; padding: 0; justify-content: center; gap: 0; font-size: 0; }
+  .pill svg { flex: none; }
   .pill.focus { background: rgba(255,255,255,.96); color: #111; border-color: transparent; transform: scale(1.06); }
 
   /* Everything below the header scrolls in one rail; the viewport clips it under the header with a soft fade. */
@@ -51,7 +54,12 @@
   #hero.hidden { opacity: 0; }
 
   #band { position: absolute; left: 117px; width: 1686px; top: var(--dock-top); height: calc(var(--tile-h) + 2 * var(--band-pad));
-          border-radius: calc(var(--tile-r) + var(--band-pad)); background: #141416; border: 2px solid rgba(255,255,255,.12); box-sizing: border-box; }
+          border-radius: calc(var(--tile-r) + var(--band-pad)); box-sizing: border-box;
+          /* Frosted glass (ambient-glass theme): 40% tint, blur, a light rim and a soft top highlight. */
+          background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.05)), rgba(14,18,28,.40);
+          -webkit-backdrop-filter: blur(28px) saturate(150%); backdrop-filter: blur(28px) saturate(150%);
+          border: 2px solid rgba(255,255,255,.2); box-shadow: inset 0 2px 0 rgba(255,255,255,.18), 0 18px 50px rgba(0,0,0,.35); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { #band { background: rgba(26,30,40,.92); } }
 
   .tile { position: absolute; width: var(--tile-w); height: var(--tile-h); border-radius: var(--tile-r); overflow: hidden;
           background: #1c1c1e; display: flex; align-items: center; justify-content: center;
@@ -186,8 +194,8 @@
 <script>
 (function () {
   'use strict';
-  var COLS = 4, PITCH = 423, TILE_W = 360, TILE_H = 202, LEFT = 145;
-  var DOCK_TOP = 698, BAND_PAD = 28, GRID_TOP = DOCK_TOP + 342, ROW_PITCH = 270;
+  var COLS = 5, PITCH = 335, TILE_W = 290, TILE_H = 163, LEFT = 145;
+  var DOCK_TOP = 698, BAND_PAD = 28, GRID_TOP = DOCK_TOP + 303, ROW_PITCH = 231;
   var GRID_SHIFT = -305;   // how far the rail slides up when focus leaves the dock
 
   // Two modes. With the helper (/api/state answers), it launches any app over the TV's remote-control channel.
